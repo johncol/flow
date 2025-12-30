@@ -1,13 +1,15 @@
+import { Tasks } from "~/pages/tasks/tasks";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+const title = "Flow | Task management made simple";
+const description =
+  "Welcome to Flow! The task management app that makes life simpler.";
 
-export default function Home() {
-  return <Welcome />;
-}
+export const meta = ({}: Route.MetaArgs) => {
+  return [{ title }, { name: "description", content: description }];
+};
+
+const Home = () => {
+  return <Tasks />;
+};
+export default Home;
