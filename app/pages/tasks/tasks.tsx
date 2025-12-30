@@ -1,5 +1,5 @@
-import { Flex, Text } from "@radix-ui/themes";
-
+import { Flex } from "@radix-ui/themes";
+import { TasksTable } from "~/components/product/tasks-table/tasks-table";
 import { Content } from "~/components/ui/content/content";
 import { Header } from "~/components/ui/header/header";
 
@@ -8,9 +8,7 @@ export const Tasks = () => {
     <Flex direction="column">
       <Header />
       <Content>
-        <Text>
-          Welcome to Flow! The task management app that makes life simpler.
-        </Text>
+        <TasksTable />
       </Content>
     </Flex>
   );
