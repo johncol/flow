@@ -1,4 +1,5 @@
 import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
+import { Theme } from "@radix-ui/themes";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,7 +11,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <Links />
       </head>
       <body>
-        {children}
+        <Theme appearance="light" accentColor="crimson" radius="large" scaling="105%">
+          {children}
+        </Theme>
         <ScrollRestoration />
         <Scripts />
       </body>

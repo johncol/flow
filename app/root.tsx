@@ -1,3 +1,5 @@
+import "@radix-ui/themes/styles.css";
+
 export { ErrorBoundary } from "./root/error-boundary";
 export { Layout } from "./root/layout";
 export { links } from "./root/links";
