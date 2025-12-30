@@ -1,8 +1,10 @@
 import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
-import { Theme } from "@radix-ui/themes";
-import { root } from "./styles.css";
+import { RadixUIProvider } from "./radix-ui-provider";
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
+import { root } from "./root.css";
+import { theme } from "~/theme.css";
+
+export const Layout = ({ children }: React.PropsWithChildren) => {
   return (
     <html lang="en">
       <head>
@@ -12,9 +14,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <Links />
       </head>
       <body>
-        <Theme appearance="light" accentColor="crimson" radius="large" scaling="105%">
-          <div className={root}>{children}</div>
-        </Theme>
+        <RadixUIProvider>
+          <div className={`${theme.className} ${root}`}>{children}</div>
+        </RadixUIProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
