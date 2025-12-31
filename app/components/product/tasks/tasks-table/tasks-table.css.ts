@@ -12,3 +12,8 @@ export const tableHeaderCell = style({
 export const dueDateText = style({
   textWrap: "nowrap",
 });
+
+export const emptyTableCell = style({
+  padding: "4rem 2rem",
+  boxShadow: "none",
+});

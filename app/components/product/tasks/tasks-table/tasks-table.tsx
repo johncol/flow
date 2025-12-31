@@ -6,15 +6,17 @@ import { SelectionHeaderCell } from "./bulk-select/selection-header-cell";
 import { DueDateCell } from "./due-date-cell";
 import { HeaderCell } from "./header-cell";
 import { StatusCell } from "./status-cell";
-import { tableTitle } from "./tasks-table.css";
+import { emptyTableCell, tableTitle } from "./tasks-table.css";
 
 export const TasksTable = () => {
-  const { tasksLoading } = useTasks();
+  const { tasks, tasksLoading } = useTasks();
 
   return (
     <Table.Root>
       <TableHeader />
-      {tasksLoading ? <TasksTableBodySkeleton /> : <TableBody />}
+      {tasksLoading ? <TasksTableBodySkeleton /> : null}
+      {!tasksLoading && tasks.length === 0 ? <EmptyTableBody /> : null}
+      {!tasksLoading && tasks.length > 0 ? <TasksTableBody /> : null}
     </Table.Root>
   );
 };
@@ -40,7 +42,7 @@ const TableHeader = () => {
   );
 };
 
-const TableBody = () => {
+const TasksTableBody = () => {
   const { tasks } = useTasks();
 
   return (
@@ -53,6 +55,21 @@ const TableBody = () => {
           <DueDateCell dueDate={dueDate} />
         </Table.Row>
       ))}
+    </Table.Body>
+  );
+};
+
+const EmptyTableBody = () => {
+  return (
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell colSpan={4} className={emptyTableCell}>
+          <Text align="center" as="p" color="gray">
+            No tasks around here. <br /> Use the <Strong>Add new task</Strong>{" "}
+            button in the top right corner to create your first task.
+          </Text>
+        </Table.Cell>
+      </Table.Row>
     </Table.Body>
   );
 };
