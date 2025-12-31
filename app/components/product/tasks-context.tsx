@@ -12,6 +12,7 @@ type TasksContextValue = {
   tasks: Task[];
   filter: FilterByStatus;
   deleteTasks: (ids: Set<string>) => void;
+  addTask: (task: Task) => void;
 };
 
 const TasksContext = createContext<TasksContextValue | null>(null);
@@ -24,10 +25,15 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setTasks((prev) => prev.filter((task) => !ids.has(task.id)));
   };
 
+  const addTask = (task: Task) => {
+    setTasks((prev) => [...prev, task]);
+  };
+
   const context: TasksContextValue = {
     tasks: filteredTasks,
     filter,
     deleteTasks,
+    addTask,
   };
 
   return (

@@ -1,9 +1,12 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
+import { useNewTask } from "~/components/product/add-task-dialog/new-task-context";
 
 export const AddTaskAction = () => {
+  const { openDialog } = useNewTask();
+
   return (
-    <Button color="amber" size="3">
+    <Button color="amber" size="3" onClick={openDialog}>
       Add new task
       <PlusIcon />
     </Button>

@@ -1,4 +1,6 @@
 import { Flex } from "@radix-ui/themes";
+import { AddTaskDialog } from "~/components/product/add-task-dialog/add-task-dialog";
+import { NewTaskProviderWrapper } from "~/components/product/add-task-dialog/new-task-context-wrapper";
 import { TasksActions } from "~/components/product/tasks-actions/tasks-actions";
 import { TaskSelectionProviderWrapper } from "~/components/product/tasks-table/bulk-select/task-selection-context-wrapper";
 import { TasksTable } from "~/components/product/tasks-table/tasks-table";
@@ -10,13 +12,16 @@ export const Tasks = () => {
   return (
     <TasksProvider>
       <TaskSelectionProviderWrapper>
-        <Flex direction="column">
-          <Header />
-          <Content>
-            <TasksActions />
-            <TasksTable />
-          </Content>
-        </Flex>
+        <NewTaskProviderWrapper>
+          <Flex direction="column">
+            <Header />
+            <Content>
+              <TasksActions />
+              <TasksTable />
+            </Content>
+          </Flex>
+          <AddTaskDialog />
+        </NewTaskProviderWrapper>
       </TaskSelectionProviderWrapper>
     </TasksProvider>
   );

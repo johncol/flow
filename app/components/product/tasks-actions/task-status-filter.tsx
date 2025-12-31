@@ -14,7 +14,7 @@ export const TaskStatusFilter = () => {
   return (
     <Flex align="center" gap="2">
       <Text as="label" size="2" htmlFor="status-filter">
-        Filter by status
+        Status:
       </Text>
       <Select.Root value={filter.status} onValueChange={handleStatusChange}>
         <Select.Trigger id="status-filter" />
