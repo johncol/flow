@@ -5,7 +5,7 @@ export const RadixUIProvider = ({ children }: { children: React.ReactNode }) => 
     <Theme
       appearance="light"
       accentColor="bronze"
-      radius="large"
+      radius="full"
       scaling="100%"
     >
       {children}

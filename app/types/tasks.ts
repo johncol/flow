@@ -1,4 +1,6 @@
-export type TaskStatus = "pending" | "in-progress" | "completed";
+export const TaskStatuses = ["pending", "in-progress", "completed"] as const;
+
+export type TaskStatus = (typeof TaskStatuses)[number];
 
 export type Task = {
   id: string;

@@ -8,5 +8,5 @@ export const curvedContainer = style({
 export const content = style({
   backgroundColor: theme.color.surface.primary,
   borderRadius: "2rem 2rem 0 0",
-  padding: "1rem",
+  padding: "2rem 1.5rem",
 });

@@ -1,5 +1,6 @@
 import type { BadgeProps } from "@radix-ui/themes";
 import type { TaskStatus } from "~/types/tasks";
+import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";
 import { Badge } from "./badge";
 import { statusBadge } from "./status-badge.css";
 
@@ -19,9 +20,4 @@ const StatusBadgeColor: Record<TaskStatus, BadgeProps["color"]> = {
   pending: "gray",
   "in-progress": "amber",
   completed: "grass",
-};
-
-const getStatusBadgeLabel = (status: TaskStatus): string => {
-  const cleanedStatus = status.split("-").join(" ");
-  return cleanedStatus;
 };
