@@ -13,6 +13,8 @@ type TaskSelectionContextValue = {
   clearSelection: () => void;
   allSelected: boolean;
   someSelected: boolean;
+  isDisabledSelection: boolean;
+  setIsDisabledSelection: (disabled: boolean) => void;
 };
 
 const TaskSelectionContext = createContext<TaskSelectionContextValue | null>(
@@ -27,8 +29,8 @@ export const TaskSelectionProvider: React.FC<TaskSelectionProviderProps> = ({
   taskIds,
   children,
 }) => {
+  const [isDisabledSelection, setIsDisabledSelection] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-
   const isSelected = (taskId: string) => selectedIds.has(taskId);
 
   const toggle = (taskId: string) => {
@@ -67,6 +69,8 @@ export const TaskSelectionProvider: React.FC<TaskSelectionProviderProps> = ({
     clearSelection,
     allSelected,
     someSelected,
+    isDisabledSelection,
+    setIsDisabledSelection,
   };
 
   return (

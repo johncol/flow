@@ -1,5 +1,6 @@
 import { TrashIcon } from "@radix-ui/react-icons";
-import { Button, Tooltip } from "@radix-ui/themes";
+import { Button, Spinner, Tooltip } from "@radix-ui/themes";
+import { useEffect, useState } from "react";
 import { useTasks } from "~/components/product/tasks/tasks-context";
 import { useTaskSelection } from "~/components/product/tasks/tasks-table/bulk-select/task-selection-context";
 import {
@@ -8,18 +9,30 @@ import {
 } from "~/utils/toasts/tasks";
 
 export const DeleteTasksAction = () => {
-  const { selectedIds, clearSelection } = useTaskSelection();
+  const { selectedIds, clearSelection, setIsDisabledSelection } = useTaskSelection();
   const { deleteTasks } = useTasks();
+  const [isDeleting, setIsDeleting] = useState(false);
   const hasSelection = selectedIds.size > 0;
 
+  useEffect(() => {
+    setIsDisabledSelection(isDeleting);
+  }, [setIsDisabledSelection, isDeleting]);
+
   const handleDelete = async () => {
+    if (isDeleting) {
+      return;
+    }
+
     try {
+      setIsDeleting(true);
       await deleteTasks(selectedIds);
       clearSelection();
       notifyTasksDeleted(selectedIds.size);
     } catch (error) {
       console.error(error);
       notifyTasksDeletedFailed(selectedIds.size);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -31,7 +44,7 @@ export const DeleteTasksAction = () => {
       onClick={handleDelete}
     >
       Delete {selectedIds.size > 0 ? `(${selectedIds.size})` : ""}
-      <TrashIcon />
+      {isDeleting ? <Spinner size="1" /> : <TrashIcon />}
     </Button>
   );
 

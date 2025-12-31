@@ -8,7 +8,7 @@ type SelectionCellProps = {
 };
 
 export const SelectionCell: React.FC<SelectionCellProps> = ({ id, title }) => {
-  const { isSelected, toggle } = useTaskSelection();
+  const { isSelected, toggle, isDisabledSelection } = useTaskSelection();
   const checkboxId = `task-selection-${id}`;
 
   return (
@@ -20,6 +20,7 @@ export const SelectionCell: React.FC<SelectionCellProps> = ({ id, title }) => {
         id={checkboxId}
         checked={isSelected(id)}
         onCheckedChange={() => toggle(id)}
+        disabled={isDisabledSelection}
       />
     </Table.Cell>
   );

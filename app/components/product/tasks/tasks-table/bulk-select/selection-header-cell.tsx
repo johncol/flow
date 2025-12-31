@@ -4,7 +4,8 @@ import { selectionCell } from "./selection-header-cell.css";
 import { useTaskSelection } from "./task-selection-context";
 
 export const SelectionHeaderCell: React.FC = () => {
-  const { allSelected, someSelected, toggleAll } = useTaskSelection();
+  const { allSelected, someSelected, toggleAll, isDisabledSelection } =
+    useTaskSelection();
 
   return (
     <HeaderCell className={selectionCell}>
@@ -15,6 +16,7 @@ export const SelectionHeaderCell: React.FC = () => {
         id="select-all-tasks"
         checked={someSelected ? "indeterminate" : allSelected}
         onCheckedChange={toggleAll}
+        disabled={isDisabledSelection}
       />
     </HeaderCell>
   );
