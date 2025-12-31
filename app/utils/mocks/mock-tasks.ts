@@ -1,4 +1,5 @@
 import type { Task } from "~/types/tasks";
+import { MOCK_USER_ID } from "../../../utils/mocks/mock-user";
 
 export const mockTasks: Task[] = [
   {
@@ -7,7 +8,7 @@ export const mockTasks: Task[] = [
     dueDate: new Date("2026-01-01"),
     status: "pending",
     createdAt: new Date("2025-01-01"),
-    userId: "u_0001",
+    userId: MOCK_USER_ID,
   },
   {
     id: "t_0002",
@@ -15,7 +16,7 @@ export const mockTasks: Task[] = [
     dueDate: new Date("2026-01-02"),
     status: "in-progress",
     createdAt: new Date("2025-01-02"),
-    userId: "u_0001",
+    userId: MOCK_USER_ID,
   },
   {
     id: "t_3",
@@ -23,6 +24,6 @@ export const mockTasks: Task[] = [
     dueDate: new Date("2026-01-03"),
     status: "completed",
     createdAt: new Date("2025-01-03"),
-    userId: "u_0001",
+    userId: MOCK_USER_ID,
   },
 ];

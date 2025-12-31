@@ -1,12 +1,19 @@
 import { Dialog } from "@radix-ui/themes";
+import { AddTaskForm } from "~/components/product/tasks/add-task-dialog/add-task-form/add-task-form";
 import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-context";
-import { AddTaskForm } from "~/components/product/tasks/add-task-dialog/add-task-form";
 
 export const AddTaskDialog = () => {
-  const { isOpen, closeDialog } = useNewTask();
+  const { isDialogOpen, closeDialog } = useNewTask();
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && closeDialog()}>
+    <Dialog.Root
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          closeDialog();
+        }
+      }}
+    >
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>Add New Task</Dialog.Title>
         <Dialog.Description size="2" mb="4">
@@ -17,4 +24,3 @@ export const AddTaskDialog = () => {
     </Dialog.Root>
   );
 };
-

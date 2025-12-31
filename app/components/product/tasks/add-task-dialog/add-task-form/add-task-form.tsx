@@ -1,46 +1,46 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
-import { useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { Button, Flex, Text, TextField } from "@radix-ui/themes";
+import { useRef, type FormEvent, type KeyboardEvent } from "react";
 import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-context";
+import { ErrorCallout } from "~/components/ui/callout/error-callout";
+import { notifyTaskAdded } from "~/utils/toasts/tasks";
 import { input } from "./add-task-form.css";
-
-type FormErrors = {
-  title?: boolean;
-  dueDate?: boolean;
-};
+import { useAddTaskFormState } from "./use-add-task-form-state";
 
 export const AddTaskForm = () => {
-  const { saveTask, closeDialog } = useNewTask();
+  const { saveTask, saveTaskFailed, closeDialog } = useNewTask();
+
   const {
     title,
     dueDate,
-    errors,
     resetState,
-    setErrors,
     updateTitle,
     updateDueDate,
-  } = useFormState();
+    errors,
+    updateErrors,
+    hasErrors,
+  } = useAddTaskFormState();
+
   const dueDateRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const newErrors: FormErrors = {
-      title: !title.trim(),
-      dueDate: !dueDate,
-    };
-
-    if (Object.values(newErrors).some(Boolean)) {
-      setErrors(newErrors);
+    const hasErrors = updateErrors();
+    if (hasErrors) {
       return;
     }
 
-    saveTask({
-      title: title.trim(),
-      dueDate: new Date(dueDate),
-    });
-
-    resetState();
+    try {
+      await saveTask({
+        title: title.trim(),
+        dueDate: new Date(dueDate),
+      });
+      resetState();
+      closeDialog();
+      notifyTaskAdded();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleTitleKeyEnterDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -49,8 +49,6 @@ export const AddTaskForm = () => {
       dueDateRef.current?.focus();
     }
   };
-
-  const hasErrors = Object.values(errors).some(Boolean);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -85,14 +83,15 @@ export const AddTaskForm = () => {
           />
         </label>
 
-        {hasErrors && (
-          <Callout.Root size="1" color="red">
-            <Callout.Icon>
-              <ExclamationTriangleIcon />
-            </Callout.Icon>
-            <Callout.Text>Please fill in all fields</Callout.Text>
-          </Callout.Root>
-        )}
+        <ErrorCallout
+          content="Please fill in all fields"
+          visibleIf={hasErrors}
+        />
+
+        <ErrorCallout
+          content="Failed to create task"
+          visibleIf={saveTaskFailed}
+        />
 
         <Flex gap="3" mt="4" justify="start" direction="row-reverse">
           <Button type="submit" color="amber">
@@ -110,40 +109,4 @@ export const AddTaskForm = () => {
       </Flex>
     </form>
   );
-};
-
-const useFormState = () => {
-  const [title, setTitle] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const resetState = () => {
-    setTitle("");
-    setDueDate("");
-    setErrors({});
-  };
-
-  const updateTitle = (value: string) => {
-    setTitle(value);
-    if (errors.title) {
-      setErrors((prev) => ({ ...prev, title: false }));
-    }
-  };
-
-  const updateDueDate = (value: string) => {
-    setDueDate(value);
-    if (errors.dueDate) {
-      setErrors((prev) => ({ ...prev, dueDate: false }));
-    }
-  };
-
-  return {
-    title,
-    dueDate,
-    updateTitle,
-    updateDueDate,
-    errors,
-    setErrors,
-    resetState,
-  };
 };

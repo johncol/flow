@@ -1,51 +1,32 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  type PropsWithChildren,
-} from "react";
-import { mockTasks } from "~/components/product/tasks/tasks-table/mock-tasks";
-import type { Task } from "~/types/tasks";
+import { createContext, useContext, type PropsWithChildren } from "react";
+import type { Task, TaskUpdates } from "~/types/tasks";
 import { useStatusFilter, type FilterByStatus } from "./use-status-filter";
-
-type TaskUpdates = Partial<Omit<Task, "id" | "createdAt" | "userId">>;
+import { useTasksState } from "./use-tasks-state";
 
 type TasksContextValue = {
   tasks: Task[];
   filter: FilterByStatus;
-  deleteTasks: (ids: Set<string>) => void;
-  addTask: (task: Task) => void;
-  updateTask: (id: string, updates: TaskUpdates) => void;
+  isLoading: boolean;
+  deleteTasks: (ids: Set<string>) => Promise<void>;
+  addTask: (task: Task) => Promise<void>;
+  updateTask: (id: string, updates: TaskUpdates) => Promise<void>;
 };
 
 const TasksContext = createContext<TasksContextValue | null>(null);
 
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const { tasks, isLoading, addTask, updateTask, deleteTasks } =
+    useTasksState();
+
   const { filteredTasks, filter } = useStatusFilter(tasks);
-
-  const deleteTasks = (ids: Set<string>) => {
-    setTasks((prev) => prev.filter((task) => !ids.has(task.id)));
-  };
-
-  const addTask = (task: Task) => {
-    setTasks((prev) => [...prev, task]);
-  };
-
-  const updateTask = (id: string, updates: TaskUpdates) => {
-    setTasks((prev) =>
-      prev.map((task) => {
-        return task.id === id ? { ...task, ...updates } : task;
-      })
-    );
-  };
 
   const context: TasksContextValue = {
     tasks: filteredTasks,
     filter,
-    deleteTasks,
+    isLoading,
     addTask,
     updateTask,
+    deleteTasks,
   };
 
   return (

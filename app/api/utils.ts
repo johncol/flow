@@ -1,0 +1,13 @@
+const SIMULATED_DELAY_MS = 1;
+
+export const delay = (millis: number = SIMULATED_DELAY_MS) => {
+  return new Promise((resolve) => setTimeout(resolve, millis));
+};
+
+const SIMULATED_ERROR = "Simulated error";
+
+export const fail = (message: string = SIMULATED_ERROR) => {
+  return new Promise((_, reject) => {
+    reject(new Error(message));
+  });
+};

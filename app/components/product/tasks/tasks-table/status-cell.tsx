@@ -3,7 +3,10 @@ import { useTasks } from "~/components/product/tasks/tasks-context";
 import { StatusBadge } from "~/components/ui/badge/status-badge";
 import { TaskStatuses, type TaskStatus } from "~/types/tasks";
 import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";
-import { notifyTaskUpdated } from "~/utils/toasts/tasks";
+import {
+  notifyTaskUpdated,
+  notifyTaskUpdatedFailed,
+} from "~/utils/toasts/tasks";
 
 type StatusCellProps = {
   taskId: string;
@@ -13,9 +16,14 @@ type StatusCellProps = {
 export const StatusCell: React.FC<StatusCellProps> = ({ taskId, status }) => {
   const { updateTask } = useTasks();
 
-  const handleStatusChange = (value: string) => {
-    updateTask(taskId, { status: value as TaskStatus });
-    notifyTaskUpdated();
+  const handleStatusChange = async (value: string) => {
+    try {
+      await updateTask(taskId, { status: value as TaskStatus });
+      notifyTaskUpdated();
+    } catch (error) {
+      console.error(error);
+      notifyTaskUpdatedFailed();
+    }
   };
 
   return (

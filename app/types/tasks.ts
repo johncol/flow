@@ -10,3 +10,5 @@ export type Task = {
   createdAt: Date;
   userId: string;
 };
+
+export type TaskUpdates = Partial<Omit<Task, "id" | "createdAt" | "userId">>;
