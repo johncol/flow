@@ -6,7 +6,7 @@ import { useTasksState } from "./use-tasks-state";
 type TasksContextValue = {
   tasks: Task[];
   filter: FilterByStatus;
-  isLoading: boolean;
+  tasksLoading: boolean;
   deleteTasks: (ids: Set<string>) => Promise<void>;
   addTask: (task: Task) => Promise<void>;
   updateTask: (id: string, updates: TaskUpdates) => Promise<void>;
@@ -15,7 +15,7 @@ type TasksContextValue = {
 const TasksContext = createContext<TasksContextValue | null>(null);
 
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const { tasks, isLoading, addTask, updateTask, deleteTasks } =
+  const { tasks, tasksLoading, addTask, updateTask, deleteTasks } =
     useTasksState();
 
   const { filteredTasks, filter } = useStatusFilter(tasks);
@@ -23,7 +23,7 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const context: TasksContextValue = {
     tasks: filteredTasks,
     filter,
-    isLoading,
+    tasksLoading,
     addTask,
     updateTask,
     deleteTasks,

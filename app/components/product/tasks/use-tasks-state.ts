@@ -5,15 +5,16 @@ import { MOCK_USER_ID } from "../../../utils/mocks/mock-user";
 
 export const useTasksState = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, []);
-  const [isLoading, setIsLoading] = useState(true);
+  const [tasksLoading, setTasksLoading] = useState(true);
 
   useEffect(() => {
     const loadTasks = async () => {
       try {
         const fetchedTasks = await api.fetchTasks(MOCK_USER_ID);
-        dispatch({ type: "set", tasks: fetchedTasks });
+        const action: TasksAction = { type: "set", tasks: fetchedTasks };
+        dispatch(action);
       } finally {
-        setIsLoading(false);
+        setTasksLoading(false);
       }
     };
     loadTasks();
@@ -39,7 +40,7 @@ export const useTasksState = () => {
 
   return {
     tasks,
-    isLoading,
+    tasksLoading,
     addTask,
     deleteTasks,
     updateTask,
