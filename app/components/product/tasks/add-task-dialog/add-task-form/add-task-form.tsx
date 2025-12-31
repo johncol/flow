@@ -1,5 +1,5 @@
-import { Button, Flex, Text, TextField } from "@radix-ui/themes";
-import { useRef, type FormEvent, type KeyboardEvent } from "react";
+import { Button, Flex, Spinner, Text, TextField } from "@radix-ui/themes";
+import { useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-context";
 import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { notifyTaskAdded } from "~/utils/toasts/tasks";
@@ -8,6 +8,7 @@ import { useAddTaskFormState } from "./use-add-task-form-state";
 
 export const AddTaskForm = () => {
   const { saveTask, saveTaskFailed, closeDialog } = useNewTask();
+  const [isSaving, setIsSaving] = useState(false);
 
   const {
     title,
@@ -25,12 +26,17 @@ export const AddTaskForm = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
+    if (isSaving) {
+      return;
+    }
+
     const hasErrors = updateErrors();
     if (hasErrors) {
       return;
     }
 
     try {
+      setIsSaving(true);
       await saveTask({
         title: title.trim(),
         dueDate: new Date(dueDate),
@@ -40,6 +46,8 @@ export const AddTaskForm = () => {
       notifyTaskAdded();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -65,6 +73,7 @@ export const AddTaskForm = () => {
             onKeyDown={handleTitleKeyEnterDown}
             color={errors.title ? "red" : undefined}
             required
+            disabled={isSaving}
           />
         </label>
 
@@ -80,6 +89,7 @@ export const AddTaskForm = () => {
             onChange={(e) => updateDueDate(e.target.value)}
             color={errors.dueDate ? "red" : undefined}
             required
+            disabled={isSaving}
           />
         </label>
 
@@ -95,7 +105,7 @@ export const AddTaskForm = () => {
 
         <Flex gap="3" mt="4" justify="start" direction="row-reverse">
           <Button type="submit" color="amber">
-            Create Task
+            Create Task {isSaving ? <Spinner size="1" /> : null}
           </Button>
           <Button
             type="button"
