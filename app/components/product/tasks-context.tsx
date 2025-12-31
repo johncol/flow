@@ -1,23 +1,25 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  type PropsWithChildren,
-} from "react";
+import { createContext, useContext, type PropsWithChildren } from "react";
 import { mockTasks } from "~/components/product/tasks-table/mock-tasks";
 import type { Task } from "~/types/tasks";
+import { useStatusFilter, type FilterByStatus } from "./useStatusFilter";
 
 type TasksContextValue = {
   tasks: Task[];
+  filter: FilterByStatus;
 };
 
 const TasksContext = createContext<TasksContextValue | null>(null);
 
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [tasks, _setTasks] = useState<Task[]>(mockTasks);
+  const { filteredTasks, filter } = useStatusFilter(mockTasks);
+
+  const context: TasksContextValue = {
+    tasks: filteredTasks,
+    filter,
+  };
 
   return (
-    <TasksContext.Provider value={{ tasks }}>{children}</TasksContext.Provider>
+    <TasksContext.Provider value={context}>{children}</TasksContext.Provider>
   );
 };
 

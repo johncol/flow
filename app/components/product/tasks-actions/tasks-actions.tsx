@@ -1,6 +1,8 @@
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Button, Flex, Select, Text, Tooltip } from "@radix-ui/themes";
+import { useTasks } from "~/components/product/tasks-context";
 import { useTaskSelection } from "~/components/product/tasks-table/bulk-select/task-selection-context";
+import type { StatusFilter } from "~/components/product/useStatusFilter";
 import { TaskStatuses } from "~/types/tasks";
 import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";
 
@@ -19,16 +21,22 @@ export const TasksActions = () => {
 };
 
 const FilterByStatusSelect = () => {
+  const { filter } = useTasks();
+
+  const handleStatusChange = (value: string) => {
+    filter.setStatus(value as StatusFilter);
+  };
+
   return (
     <Flex align="center" gap="2">
       <Text as="label" size="2" htmlFor="status-filter">
         Filter by status
       </Text>
-      <Select.Root defaultValue="all">
+      <Select.Root value={filter.status} onValueChange={handleStatusChange}>
         <Select.Trigger id="status-filter" />
         <Select.Content>
           <Select.Item value="all">All</Select.Item>
-          {Object.values(TaskStatuses).map((status) => (
+          {TaskStatuses.map((status) => (
             <Select.Item key={status} value={status}>
               {getStatusBadgeLabel(status)}
             </Select.Item>
