@@ -8,11 +8,14 @@ import { mockTasks } from "~/components/product/tasks-table/mock-tasks";
 import type { Task } from "~/types/tasks";
 import { useStatusFilter, type FilterByStatus } from "./useStatusFilter";
 
+type TaskUpdates = Partial<Omit<Task, "id" | "createdAt" | "userId">>;
+
 type TasksContextValue = {
   tasks: Task[];
   filter: FilterByStatus;
   deleteTasks: (ids: Set<string>) => void;
   addTask: (task: Task) => void;
+  updateTask: (id: string, updates: TaskUpdates) => void;
 };
 
 const TasksContext = createContext<TasksContextValue | null>(null);
@@ -29,11 +32,20 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setTasks((prev) => [...prev, task]);
   };
 
+  const updateTask = (id: string, updates: TaskUpdates) => {
+    setTasks((prev) =>
+      prev.map((task) => {
+        return task.id === id ? { ...task, ...updates } : task;
+      })
+    );
+  };
+
   const context: TasksContextValue = {
     tasks: filteredTasks,
     filter,
     deleteTasks,
     addTask,
+    updateTask,
   };
 
   return (

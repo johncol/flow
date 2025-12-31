@@ -1,12 +1,11 @@
 import { Strong, Table, Text } from "@radix-ui/themes";
-import { Badge } from "~/components/ui/badge/badge";
-import { StatusBadge } from "~/components/ui/badge/status-badge";
 import { useTasks } from "~/components/product/tasks-context";
-import type { TaskStatus } from "~/types/tasks";
+import { Badge } from "~/components/ui/badge/badge";
 import { formatDate } from "~/utils/dates/formatting";
 import { SelectionCell } from "./bulk-select/selection-cell";
 import { SelectionHeaderCell } from "./bulk-select/selection-header-cell";
 import { HeaderCell } from "./header-cell";
+import { StatusCell } from "./status-cell";
 import { dueDateText, tableTitle } from "./tasks-table.css";
 
 export const TasksTable = () => {
@@ -35,20 +34,12 @@ export const TasksTable = () => {
           <Table.Row key={id}>
             <SelectionCell id={id} title={title} />
             <Table.Cell>{title}</Table.Cell>
-            <StatusCell status={status} />
+            <StatusCell taskId={id} status={status} />
             <DueDateCell dueDate={dueDate} />
           </Table.Row>
         ))}
       </Table.Body>
     </Table.Root>
-  );
-};
-
-const StatusCell: React.FC<{ status: TaskStatus }> = ({ status }) => {
-  return (
-    <Table.Cell>
-      <StatusBadge status={status} />
-    </Table.Cell>
   );
 };
 

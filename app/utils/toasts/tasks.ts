@@ -7,3 +7,7 @@ export const notifyTasksDeleted = (count: number) => {
 export const notifyTaskAdded = () => {
   showSuccessToast(`Task added successfully`);
 };
+
+export const notifyTaskUpdated = () => {
+  showSuccessToast(`Task updated successfully`);
+};
