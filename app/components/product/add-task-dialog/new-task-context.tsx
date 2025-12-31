@@ -5,6 +5,7 @@ import {
   type PropsWithChildren,
 } from "react";
 import type { Task } from "~/types/tasks";
+import { notifyTaskAdded } from "~/utils/toasts/tasks";
 
 type NewTaskInput = {
   title: string;
@@ -45,6 +46,7 @@ export const NewTaskProvider: React.FC<NewTaskProviderProps> = ({
 
     addTask(newTask);
     closeDialog();
+    notifyTaskAdded();
   };
 
   const context: NewTaskContextValue = {
@@ -68,4 +70,3 @@ export const useNewTask = () => {
   }
   return context;
 };
-

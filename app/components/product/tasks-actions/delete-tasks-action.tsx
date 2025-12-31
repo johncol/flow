@@ -2,6 +2,7 @@ import { TrashIcon } from "@radix-ui/react-icons";
 import { Button, Tooltip } from "@radix-ui/themes";
 import { useTasks } from "~/components/product/tasks-context";
 import { useTaskSelection } from "~/components/product/tasks-table/bulk-select/task-selection-context";
+import { notifyTasksDeleted } from "~/utils/toasts/tasks";
 
 export const DeleteTasksAction = () => {
   const { selectedIds, clearSelection } = useTaskSelection();
@@ -11,6 +12,7 @@ export const DeleteTasksAction = () => {
   const handleDelete = () => {
     deleteTasks(selectedIds);
     clearSelection();
+    notifyTasksDeleted(selectedIds.size);
   };
 
   const button = (

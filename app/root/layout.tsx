@@ -1,5 +1,6 @@
 import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
 import { RadixUIProvider } from "./radix-ui-provider";
+import { Toaster } from "~/components/ui/toast/toast";
 
 import { root } from "./root.css";
 import { theme } from "~/theme.css";
@@ -16,6 +17,7 @@ export const Layout = ({ children }: React.PropsWithChildren) => {
       <body>
         <RadixUIProvider>
           <div className={`${theme.className} ${root}`}>{children}</div>
+          <Toaster />
         </RadixUIProvider>
         <ScrollRestoration />
         <Scripts />
