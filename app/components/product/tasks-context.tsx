@@ -6,7 +6,7 @@ import {
 } from "react";
 import { mockTasks } from "~/components/product/tasks-table/mock-tasks";
 import type { Task } from "~/types/tasks";
-import { useStatusFilter, type FilterByStatus } from "./useStatusFilter";
+import { useStatusFilter, type FilterByStatus } from "./use-status-filter";
 
 type TaskUpdates = Partial<Omit<Task, "id" | "createdAt" | "userId">>;
 
