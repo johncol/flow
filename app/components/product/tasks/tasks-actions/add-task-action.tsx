@@ -1,6 +1,6 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
-import { useNewTask } from "~/components/product/add-task-dialog/new-task-context";
+import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-context";
 
 export const AddTaskAction = () => {
   const { openDialog } = useNewTask();

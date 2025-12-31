@@ -1,6 +1,6 @@
 import { Flex, Select, Text } from "@radix-ui/themes";
-import { useTasks } from "~/components/product/tasks-context";
-import type { StatusFilter } from "~/components/product/use-status-filter";
+import { useTasks } from "~/components/product/tasks/tasks-context";
+import type { StatusFilter } from "~/components/product/tasks/use-status-filter";
 import { TaskStatuses } from "~/types/tasks";
 import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";
 

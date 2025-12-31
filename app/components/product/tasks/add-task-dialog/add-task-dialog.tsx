@@ -1,6 +1,6 @@
 import { Dialog } from "@radix-ui/themes";
-import { useNewTask } from "~/components/product/add-task-dialog/new-task-context";
-import { AddTaskForm } from "~/components/product/add-task-dialog/add-task-form";
+import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-context";
+import { AddTaskForm } from "~/components/product/tasks/add-task-dialog/add-task-form";
 
 export const AddTaskDialog = () => {
   const { isOpen, closeDialog } = useNewTask();

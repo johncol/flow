@@ -1,7 +1,7 @@
 import { TrashIcon } from "@radix-ui/react-icons";
 import { Button, Tooltip } from "@radix-ui/themes";
-import { useTasks } from "~/components/product/tasks-context";
-import { useTaskSelection } from "~/components/product/tasks-table/bulk-select/task-selection-context";
+import { useTasks } from "~/components/product/tasks/tasks-context";
+import { useTaskSelection } from "~/components/product/tasks/tasks-table/bulk-select/task-selection-context";
 import { notifyTasksDeleted } from "~/utils/toasts/tasks";
 
 export const DeleteTasksAction = () => {

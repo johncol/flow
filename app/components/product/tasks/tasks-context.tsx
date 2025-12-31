@@ -4,7 +4,7 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
-import { mockTasks } from "~/components/product/tasks-table/mock-tasks";
+import { mockTasks } from "~/components/product/tasks/tasks-table/mock-tasks";
 import type { Task } from "~/types/tasks";
 import { useStatusFilter, type FilterByStatus } from "./use-status-filter";
 

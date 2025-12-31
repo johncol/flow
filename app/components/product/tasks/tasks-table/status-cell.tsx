@@ -1,5 +1,5 @@
 import { Select, Table } from "@radix-ui/themes";
-import { useTasks } from "~/components/product/tasks-context";
+import { useTasks } from "~/components/product/tasks/tasks-context";
 import { StatusBadge } from "~/components/ui/badge/status-badge";
 import { TaskStatuses, type TaskStatus } from "~/types/tasks";
 import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";

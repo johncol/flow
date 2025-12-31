@@ -1,5 +1,5 @@
 import { Strong, Table, Text } from "@radix-ui/themes";
-import { useTasks } from "~/components/product/tasks-context";
+import { useTasks } from "~/components/product/tasks/tasks-context";
 import { Badge } from "~/components/ui/badge/badge";
 import { formatDate } from "~/utils/dates/formatting";
 import { SelectionCell } from "./bulk-select/selection-cell";

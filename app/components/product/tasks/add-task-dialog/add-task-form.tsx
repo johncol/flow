@@ -1,7 +1,7 @@
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
 import { useRef, useState, type FormEvent, type KeyboardEvent } from "react";
-import { useNewTask } from "~/components/product/add-task-dialog/new-task-context";
+import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-context";
 import { input } from "./add-task-form.css";
 
 type FormErrors = {
