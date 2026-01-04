@@ -1,6 +1,7 @@
 import * as tasksStorage from "~/storage/tasks";
-import type { Task, TaskUpdates } from "~/types/tasks";
-import { delay } from "./utils";
+import type { NewTaskInput, Task, TaskUpdates } from "~/types/tasks";
+import { MOCK_USER_ID } from "~/utils/mocks/mock-user";
+import { delay, generateTaskId } from "./utils";
 
 export const fetchTasks = async (userId: string): Promise<Task[]> => {
   await delay();
@@ -12,8 +13,17 @@ export const fetchTasks = async (userId: string): Promise<Task[]> => {
   return tasksStorage.getTasks(userId);
 };
 
-export const createTask = async (task: Task): Promise<Task> => {
+export const createTask = async (input: NewTaskInput): Promise<Task> => {
   await delay();
+
+  const task: Task = {
+    id: generateTaskId(),
+    title: input.title,
+    dueDate: input.dueDate,
+    status: "pending",
+    createdAt: new Date(),
+    userId: MOCK_USER_ID,
+  };
 
   const tasks = tasksStorage.getTasks(task.userId);
   tasksStorage.saveTasks(task.userId, [...tasks, task]);

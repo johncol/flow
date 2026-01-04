@@ -1,5 +1,5 @@
 import { createContext, useContext, type PropsWithChildren } from "react";
-import type { Task, TaskUpdates } from "~/types/tasks";
+import type { NewTaskInput, Task, TaskUpdates } from "~/types/tasks";
 import { useStatusFilter, type FilterByStatus } from "./use-status-filter";
 import { useTasksState } from "./use-tasks-state";
 
@@ -8,7 +8,7 @@ type TasksContextValue = {
   filter: FilterByStatus;
   tasksLoading: boolean;
   deleteTasks: (ids: Set<string>) => Promise<void>;
-  addTask: (task: Task) => Promise<void>;
+  addTask: (input: NewTaskInput) => Promise<void>;
   updateTask: (id: string, updates: TaskUpdates) => Promise<void>;
 };
 

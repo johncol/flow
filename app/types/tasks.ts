@@ -11,4 +11,9 @@ export type Task = {
   userId: string;
 };
 
+export type NewTaskInput = {
+  title: string;
+  dueDate: Date;
+};
+
 export type TaskUpdates = Partial<Omit<Task, "id" | "createdAt" | "userId">>;

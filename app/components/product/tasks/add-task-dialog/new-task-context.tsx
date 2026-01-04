@@ -4,13 +4,7 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
-import type { Task } from "~/types/tasks";
-import { MOCK_USER_ID } from "../../../../utils/mocks/mock-user";
-
-type NewTaskInput = {
-  title: string;
-  dueDate: Date;
-};
+import type { NewTaskInput } from "~/types/tasks";
 
 type NewTaskContextValue = {
   isDialogOpen: boolean;
@@ -23,14 +17,13 @@ type NewTaskContextValue = {
 const NewTaskContext = createContext<NewTaskContextValue | null>(null);
 
 type NewTaskProviderProps = PropsWithChildren<{
-  addTask: (task: Task) => Promise<void>;
+  addTask: (input: NewTaskInput) => Promise<void>;
 }>;
 
 export const NewTaskProvider: React.FC<NewTaskProviderProps> = ({
   addTask,
   children,
 }) => {
-  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => {
@@ -41,16 +34,7 @@ export const NewTaskProvider: React.FC<NewTaskProviderProps> = ({
   const [saveTaskFailed, setSaveTaskFailed] = useState(false);
 
   const saveTask = (input: NewTaskInput) => {
-    const newTask: Task = {
-      id: "t_" + crypto.randomUUID(),
-      title: input.title,
-      dueDate: input.dueDate,
-      status: "pending",
-      createdAt: new Date(),
-      userId: MOCK_USER_ID,
-    };
-
-    return addTask(newTask)
+    return addTask(input)
       .then(() => setSaveTaskFailed(false))
       .catch((error) => {
         setSaveTaskFailed(true);

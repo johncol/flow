@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import * as api from "~/api/tasks";
-import type { Task, TaskUpdates } from "~/types/tasks";
+import type { NewTaskInput, Task, TaskUpdates } from "~/types/tasks";
 import { MOCK_USER_ID } from "../../../utils/mocks/mock-user";
 
 export const useTasksState = () => {
@@ -26,8 +26,8 @@ export const useTasksState = () => {
     dispatch(action);
   };
 
-  const addTask = async (task: Task) => {
-    await api.createTask(task);
+  const addTask = async (input: NewTaskInput) => {
+    const task = await api.createTask(input);
     const action: TasksAction = { type: "add", task };
     dispatch(action);
   };
