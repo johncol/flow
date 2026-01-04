@@ -1,9 +1,11 @@
 import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
-import { RadixUIProvider } from "./radix-ui-provider";
 import { Toaster } from "~/components/ui/toast/toast";
+import { RadixUIProvider } from "./radix-ui-provider";
 
-import { root } from "./root.css";
+import { AuthProvider } from "~/components/product/session/auth-context";
+
 import { theme } from "~/theme.css";
+import "./root.css";
 
 export const Layout = ({ children }: React.PropsWithChildren) => {
   return (
@@ -16,7 +18,11 @@ export const Layout = ({ children }: React.PropsWithChildren) => {
       </head>
       <body>
         <RadixUIProvider>
-          <div className={`${theme.className} ${root}`}>{children}</div>
+          <AuthProvider>
+            <div id="root" className={`${theme.className}`}>
+              {children}
+            </div>
+          </AuthProvider>
           <Toaster />
         </RadixUIProvider>
         <ScrollRestoration />
