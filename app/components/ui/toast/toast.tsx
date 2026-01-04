@@ -5,13 +5,17 @@ export const Toaster = () => {
     <HotToaster
       position="bottom-right"
       toastOptions={{
-        duration: 4000,
+        duration: 6000,
         style: {
           borderRadius: "1rem",
           boxShadow: "none",
           border: "1px solid #e0e0e0",
           padding: "1rem 2rem",
           fontSize: "1.4rem",
+        },
+        ariaProps: {
+          role: "status",
+          "aria-live": "polite",
         },
       }}
     />
@@ -29,6 +33,7 @@ export const showSuccessToast = (message: string) => {
  * Show an error toast notification
  */
 export const showErrorToast = (message: string) => {
-  toast.error(message);
+  toast.error(message, {
+    ariaProps: { role: "alert", "aria-live": "assertive" },
+  });
 };
-
