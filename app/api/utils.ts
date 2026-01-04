@@ -1,3 +1,5 @@
+import type { EncryptedString } from "~/types/users";
+
 const SIMULATED_DELAY_MS = 100;
 
 export const delay = (millis: number = SIMULATED_DELAY_MS) => {
@@ -18,4 +20,14 @@ export const generateTaskId = () => {
 
 export const generateUserId = () => {
   return "user_" + crypto.randomUUID();
+};
+
+export const encryptPassword = (password: string): Promise<EncryptedString> => {
+  return crypto.subtle
+    .digest("SHA-256", new TextEncoder().encode(password))
+    .then((hash) => {
+      return Array.from(new Uint8Array(hash))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+    });
 };
