@@ -1,7 +1,7 @@
 import * as usersApi from "~/api/users";
+import type { Session } from "~/types/session";
 import type { NewUserInput } from "~/types/users";
 import * as sessionStorage from "./storage/session";
-import { type Session } from "./storage/session";
 
 export const login = async (
   email: string,
@@ -25,4 +25,8 @@ export const createAndLogin = async (input: NewUserInput): Promise<Session> => {
 
 export const logout = (): void => {
   sessionStorage.deleteSession();
+};
+
+export const getSession = (): Session | null => {
+  return sessionStorage.getSession();
 };

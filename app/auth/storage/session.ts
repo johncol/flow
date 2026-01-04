@@ -1,13 +1,7 @@
+import type { Session } from "~/types/session";
 import type { User } from "~/types/users";
 
 const SESSION_STORAGE_KEY = "session";
-
-export type SessionUser = Omit<User, "password" | "createdAt">;
-
-export type Session = {
-  user: SessionUser;
-  loginTime: Date;
-};
 
 type StoredSession = Omit<Session, "loginTime"> & {
   loginTime: string;
