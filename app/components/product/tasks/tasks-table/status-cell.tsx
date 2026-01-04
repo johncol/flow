@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTasks } from "~/components/product/tasks/tasks-context";
 import { StatusBadge } from "~/components/ui/badge/status-badge";
 import { TaskStatuses, type TaskStatus } from "~/types/tasks";
-import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";
+import { getStatusLabel } from "~/utils/status/get-status-label";
 import {
   notifyTaskUpdated,
   notifyTaskUpdatedFailed,
@@ -44,7 +44,7 @@ export const StatusCell: React.FC<StatusCellProps> = ({ taskId, status }) => {
         <Select.Content>
           {TaskStatuses.map((statusOption) => (
             <Select.Item key={statusOption} value={statusOption}>
-              {getStatusBadgeLabel(statusOption)}
+              {getStatusLabel(statusOption)}
             </Select.Item>
           ))}
         </Select.Content>

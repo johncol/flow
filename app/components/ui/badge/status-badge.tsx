@@ -1,6 +1,6 @@
 import { Spinner, type BadgeProps } from "@radix-ui/themes";
 import type { TaskStatus } from "~/types/tasks";
-import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";
+import { getStatusLabel } from "~/utils/status/get-status-label";
 import { Badge } from "./badge";
 import { statusBadge } from "./status-badge.css";
 
@@ -12,7 +12,7 @@ type StatusBadgeProps = {
 export const StatusBadge = ({ status, isUpdating }: StatusBadgeProps) => {
   return (
     <Badge color={StatusBadgeColor[status]} className={statusBadge}>
-      {getStatusBadgeLabel(status)} {isUpdating ? <Spinner size="1" /> : null}
+      {getStatusLabel(status)} {isUpdating ? <Spinner size="1" /> : null}
     </Badge>
   );
 };

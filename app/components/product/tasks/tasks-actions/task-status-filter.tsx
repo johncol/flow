@@ -2,7 +2,7 @@ import { Flex, Select, Text } from "@radix-ui/themes";
 import { useTasks } from "~/components/product/tasks/tasks-context";
 import type { StatusFilter } from "~/components/product/tasks/use-status-filter";
 import { TaskStatuses } from "~/types/tasks";
-import { getStatusBadgeLabel } from "~/utils/status/getStatusLabel";
+import { getStatusLabel } from "~/utils/status/get-status-label";
 
 export const TaskStatusFilter = () => {
   const { filter } = useTasks();
@@ -22,7 +22,7 @@ export const TaskStatusFilter = () => {
           <Select.Item value="all">All</Select.Item>
           {TaskStatuses.map((status) => (
             <Select.Item key={status} value={status}>
-              {getStatusBadgeLabel(status)}
+              {getStatusLabel(status)}
             </Select.Item>
           ))}
         </Select.Content>
