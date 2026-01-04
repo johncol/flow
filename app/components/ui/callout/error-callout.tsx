@@ -19,7 +19,9 @@ export const ErrorCallout: React.FC<ErrorCalloutProps> = ({
       <Callout.Icon>
         <ExclamationTriangleIcon />
       </Callout.Icon>
-      <Callout.Text>{content}</Callout.Text>
+      <Callout.Text role="alert" aria-live="assertive">
+        {content}
+      </Callout.Text>
     </Callout.Root>
   );
 };
