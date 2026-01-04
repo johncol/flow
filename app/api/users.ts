@@ -1,4 +1,4 @@
-import * as usersStorage from "~/storage/users";
+import * as usersStorage from "~/api/storage/users";
 import type { NewUserInput, User } from "~/types/users";
 import { delay, encryptPassword, generateUserId } from "./utils";
 

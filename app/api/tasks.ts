@@ -1,4 +1,4 @@
-import * as tasksStorage from "~/storage/tasks";
+import * as tasksStorage from "~/api/storage/tasks";
 import type { NewTaskInput, Task, TaskUpdates } from "~/types/tasks";
 import { MOCK_USER_ID } from "~/utils/mocks/mock-user";
 import { delay, generateTaskId } from "./utils";
