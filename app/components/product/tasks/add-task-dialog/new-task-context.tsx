@@ -10,8 +10,7 @@ type NewTaskContextValue = {
   isDialogOpen: boolean;
   openDialog: () => void;
   closeDialog: () => void;
-  saveTask: (input: NewTaskInput) => Promise<void>;
-  saveTaskFailed: boolean;
+  addTask: (input: NewTaskInput) => Promise<void>;
 };
 
 const NewTaskContext = createContext<NewTaskContextValue | null>(null);
@@ -25,29 +24,12 @@ export const NewTaskProvider: React.FC<NewTaskProviderProps> = ({
   children,
 }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const openDialog = () => setIsDialogOpen(true);
-  const closeDialog = () => {
-    setIsDialogOpen(false);
-    setSaveTaskFailed(false);
-  };
-
-  const [saveTaskFailed, setSaveTaskFailed] = useState(false);
-
-  const saveTask = (input: NewTaskInput) => {
-    return addTask(input)
-      .then(() => setSaveTaskFailed(false))
-      .catch((error) => {
-        setSaveTaskFailed(true);
-        throw error;
-      });
-  };
 
   const context: NewTaskContextValue = {
     isDialogOpen,
-    openDialog,
-    closeDialog,
-    saveTask,
-    saveTaskFailed,
+    openDialog: () => setIsDialogOpen(true),
+    closeDialog: () => setIsDialogOpen(false),
+    addTask,
   };
 
   return (

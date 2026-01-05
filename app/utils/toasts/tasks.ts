@@ -1,4 +1,11 @@
 import { showErrorToast, showSuccessToast } from "~/components/ui/toast/toast";
+import { DEFAULT_ERROR_MESSAGE } from "./utils";
+
+export const notifyTasksLoadingFailed = () => {
+  showErrorToast(
+    "Something went wrong while loading tasks. Please refresh the page."
+  );
+};
 
 export const notifyTaskAdded = () => {
   showSuccessToast(`Task added successfully`);
@@ -13,9 +20,9 @@ export const notifyTasksDeleted = (count: number) => {
 };
 
 export const notifyTaskUpdatedFailed = () => {
-  showErrorToast(`Failed to update task`);
+  showErrorToast(DEFAULT_ERROR_MESSAGE);
 };
 
-export const notifyTasksDeletedFailed = (count: number) => {
-  showErrorToast(`Failed to delete task${count > 1 ? "s" : ""}`);
+export const notifyTasksDeletedFailed = (_count: number) => {
+  showErrorToast(DEFAULT_ERROR_MESSAGE);
 };

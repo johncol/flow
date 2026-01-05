@@ -1,16 +1,24 @@
 import { Skeleton, Strong, Table, Text } from "@radix-ui/themes";
+import { useEffect } from "react";
 import { useTasks } from "~/components/product/tasks/tasks-context";
 import { Badge } from "~/components/ui/badge/badge";
+import { container } from "~/global-styles/responsive.css";
+import { notifyTasksLoadingFailed } from "~/utils/toasts/tasks";
 import { SelectionCell } from "./bulk-select/selection-cell";
 import { SelectionHeaderCell } from "./bulk-select/selection-header-cell";
 import { DueDateCell } from "./due-date-cell";
 import { HeaderCell } from "./header-cell";
 import { StatusCell } from "./status-cell";
-import { tableRoot, emptyTableCell, tableTitle } from "./tasks-table.css";
-import { container } from "~/global-styles/responsive.css";
+import { emptyTableCell, tableRoot, tableTitle } from "./tasks-table.css";
 
 export const TasksTable = () => {
-  const { tasks, tasksLoading } = useTasks();
+  const { tasks, tasksLoading, errorLoadingTasks } = useTasks();
+
+  useEffect(() => {
+    if (errorLoadingTasks) {
+      notifyTasksLoadingFailed();
+    }
+  }, [errorLoadingTasks]);
 
   return (
     <Table.Root className={tableRoot}>

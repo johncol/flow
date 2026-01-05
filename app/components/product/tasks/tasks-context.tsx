@@ -7,6 +7,7 @@ type TasksContextValue = {
   tasks: Task[];
   filter: FilterByStatus;
   tasksLoading: boolean;
+  errorLoadingTasks: boolean;
   deleteTasks: (ids: Set<string>) => Promise<void>;
   addTask: (input: NewTaskInput) => Promise<void>;
   updateTask: (id: string, updates: TaskUpdates) => Promise<void>;
@@ -15,18 +16,13 @@ type TasksContextValue = {
 const TasksContext = createContext<TasksContextValue | null>(null);
 
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const { tasks, tasksLoading, addTask, updateTask, deleteTasks } =
-    useTasksState();
-
-  const { filteredTasks, filter } = useStatusFilter(tasks);
+  const { tasks: unfilteredTasks, ...tasksState } = useTasksState();
+  const { filteredTasks: tasks, filter } = useStatusFilter(unfilteredTasks);
 
   const context: TasksContextValue = {
-    tasks: filteredTasks,
+    ...tasksState,
+    tasks,
     filter,
-    tasksLoading,
-    addTask,
-    updateTask,
-    deleteTasks,
   };
 
   return (

@@ -4,10 +4,12 @@ import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-
 import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { Input } from "~/components/ui/input/input";
 import { notifyTaskAdded } from "~/utils/toasts/tasks";
+import { DEFAULT_ERROR_MESSAGE } from "~/utils/toasts/utils";
 import { useAddTaskFormState } from "./use-add-task-form-state";
 
 export const AddTaskForm = () => {
-  const { saveTask, saveTaskFailed, closeDialog } = useNewTask();
+  const { addTask, closeDialog } = useNewTask();
+  const [addTaskFailed, setAddTaskFailed] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const {
@@ -37,15 +39,19 @@ export const AddTaskForm = () => {
 
     try {
       setIsSaving(true);
-      await saveTask({
+      setAddTaskFailed(false);
+
+      await addTask({
         title: title.trim(),
         dueDate: new Date(dueDate),
       });
+
       resetState();
       closeDialog();
       notifyTaskAdded();
     } catch (error) {
       console.error(error);
+      setAddTaskFailed(true);
     } finally {
       setIsSaving(false);
     }
@@ -97,8 +103,8 @@ export const AddTaskForm = () => {
         />
 
         <ErrorCallout
-          content="Failed to create task"
-          visibleIf={saveTaskFailed}
+          content={DEFAULT_ERROR_MESSAGE}
+          visibleIf={addTaskFailed}
         />
 
         <Flex gap="3" mt="4" justify="start" direction="row-reverse">

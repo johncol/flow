@@ -6,6 +6,7 @@ import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { Input } from "~/components/ui/input/input";
 import { DomainError } from "~/errors/domain-error";
 import { notifySignupWelcome } from "~/utils/toasts/session";
+import { DEFAULT_ERROR_MESSAGE } from "~/utils/toasts/utils";
 import { useLoggedOutTasks } from "../use-logged-out-tasks";
 import { useSignupFormState } from "./use-signup-form-state";
 
@@ -159,6 +160,3 @@ export const SignupForm = () => {
     </form>
   );
 };
-
-const DEFAULT_ERROR_MESSAGE =
-  "Unable to create account. Please try again or contact our support team.";

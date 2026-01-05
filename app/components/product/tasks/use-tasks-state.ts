@@ -6,6 +6,7 @@ import { useSession } from "../session/auth-context";
 export const useTasksState = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, []);
   const [tasksLoading, setTasksLoading] = useState(true);
+  const [errorLoadingTasks, setErrorLoadingTasks] = useState<boolean>(false);
   const { userId } = useSession();
 
   useEffect(() => {
@@ -14,6 +15,9 @@ export const useTasksState = () => {
         const fetchedTasks = await api.fetchTasks(userId);
         const action: TasksAction = { type: "set", tasks: fetchedTasks };
         dispatch(action);
+      } catch (error) {
+        console.error(error);
+        setErrorLoadingTasks(true);
       } finally {
         setTasksLoading(false);
       }
@@ -42,6 +46,7 @@ export const useTasksState = () => {
   return {
     tasks,
     tasksLoading,
+    errorLoadingTasks,
     addTask,
     deleteTasks,
     updateTask,
