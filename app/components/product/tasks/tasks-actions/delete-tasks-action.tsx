@@ -7,6 +7,7 @@ import {
   notifyTasksDeleted,
   notifyTasksDeletedFailed,
 } from "~/utils/toasts/tasks";
+import { largeContainer } from "./delete-tasks-action.css";
 
 export const DeleteTasksAction = () => {
   const { selectedIds, clearSelection, setIsDisabledSelection } = useTaskSelection();
@@ -42,8 +43,10 @@ export const DeleteTasksAction = () => {
       size="2"
       disabled={!hasSelection}
       onClick={handleDelete}
+      aria-label={getAriaLabel(selectedIds.size)}
     >
-      Delete {selectedIds.size > 0 ? `(${selectedIds.size})` : ""}
+      <span className={largeContainer}>Delete</span>
+      {getMaybeTasksCount(selectedIds.size)}
       {isDeleting ? <Spinner size="1" /> : <TrashIcon />}
     </Button>
   );
@@ -57,4 +60,12 @@ export const DeleteTasksAction = () => {
       {button}
     </Tooltip>
   );
+};
+
+const getMaybeTasksCount = (count: number) => {
+  return count > 0 ? `(${count})` : "";
+};
+
+const getAriaLabel = (count: number) => {
+  return `Delete ${count} task${count > 1 ? "s" : ""}`;
 };
