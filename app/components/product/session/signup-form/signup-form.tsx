@@ -6,13 +6,14 @@ import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { Input } from "~/components/ui/input/input";
 import { ModalPage } from "~/components/ui/modal-page/modal-page";
 import { showSuccessToast } from "~/components/ui/toast/toast";
+import { DomainError } from "~/errors/domain-error";
 import { useSignupFormState } from "./use-signup-form-state";
 
 export const SignupForm = () => {
   const { signup } = useSession();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [signupFailed, setSignupFailed] = useState(false);
+  const [signupError, setSignupError] = useState<string | null>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -49,7 +50,7 @@ export const SignupForm = () => {
       return;
     }
 
-    setSignupFailed(false);
+    setSignupError(null);
 
     const hasValidationErrors = updateErrors();
     if (hasValidationErrors) {
@@ -58,6 +59,7 @@ export const SignupForm = () => {
 
     try {
       setIsLoading(true);
+
       const session = await signup({
         name: name.trim(),
         email: email.trim(),
@@ -65,7 +67,7 @@ export const SignupForm = () => {
       });
 
       if (session === null) {
-        setSignupFailed(true);
+        setSignupError(DEFAULT_ERROR_MESSAGE);
         return;
       }
 
@@ -73,14 +75,21 @@ export const SignupForm = () => {
       navigate("/");
     } catch (error) {
       console.error(error);
-      setSignupFailed(true);
+      if (error instanceof DomainError) {
+        setSignupError(error.message);
+      } else {
+        setSignupError(DEFAULT_ERROR_MESSAGE);
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <ModalPage heading="Create account" subheading="Sign up to get started with Flow">
+    <ModalPage
+      heading="Create account"
+      subheading="Sign up to get started with Flow"
+    >
       <form onSubmit={handleSubmit}>
         <Flex direction="column" gap="4">
           <label>
@@ -138,8 +147,8 @@ export const SignupForm = () => {
           />
 
           <ErrorCallout
-            content="Unable to create account. Please try again."
-            visibleIf={signupFailed}
+            content={signupError!}
+            visibleIf={signupError !== null}
           />
 
           <Button type="submit" size="3" mt="2" color="amber">
@@ -156,3 +165,6 @@ export const SignupForm = () => {
     </ModalPage>
   );
 };
+
+const DEFAULT_ERROR_MESSAGE =
+  "Unable to create account. Please try again or contact our support team.";

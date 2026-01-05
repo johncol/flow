@@ -1,4 +1,5 @@
 import * as usersStorage from "~/api/storage/users";
+import { DomainError } from "~/errors/domain-error";
 import type { NewUserInput, User } from "~/types/users";
 import { delay, encryptPassword, generateUserId } from "./utils";
 
@@ -18,6 +19,15 @@ export const fetchUser = async (
 export const createUser = async (input: NewUserInput): Promise<User> => {
   await delay();
 
+  const users = usersStorage.getUsers();
+  const emailExists = users.some(
+    (user) => user.email.toLowerCase() === input.email.toLowerCase()
+  );
+
+  if (emailExists) {
+    throw new DomainError("An account with this email is already registered.");
+  }
+
   const encryptedPassword = await encryptPassword(input.password);
   const user: User = {
     id: generateUserId(),
@@ -27,7 +37,6 @@ export const createUser = async (input: NewUserInput): Promise<User> => {
     createdAt: new Date(),
   };
 
-  const users = usersStorage.getUsers();
   usersStorage.saveUsers([...users, user]);
 
   return user;
