@@ -39,7 +39,7 @@ export const DeleteTasksAction = () => {
   const button = (
     <Button
       color="red"
-      size="3"
+      size="2"
       disabled={!hasSelection}
       onClick={handleDelete}
     >

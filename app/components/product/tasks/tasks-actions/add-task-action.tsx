@@ -6,7 +6,7 @@ export const AddTaskAction = () => {
   const { openDialog } = useNewTask();
 
   return (
-    <Button color="amber" size="3" onClick={openDialog}>
+    <Button color="amber" size="2" onClick={openDialog}>
       Add new task
       <PlusIcon />
     </Button>
