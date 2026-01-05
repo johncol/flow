@@ -12,7 +12,3 @@ export const header = style({
   color: theme.color.text.inverse,
   fontWeight: "700",
 });
-
-export const logo = style({
-  height: "4rem",
-});

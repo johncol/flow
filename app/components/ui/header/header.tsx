@@ -1,6 +1,7 @@
 import { useSession } from "~/components/product/session/auth-context";
+import { Logo } from "../logo/logo";
 import { AuthCta } from "./auth-cta";
-import { header, logo } from "./header.css";
+import { header } from "./header.css";
 import { UserMenu } from "./user-menu";
 
 export const Header = () => {
@@ -11,8 +12,4 @@ export const Header = () => {
       {isLoggedIn ? <UserMenu /> : <AuthCta />}
     </div>
   );
-};
-
-const Logo = () => {
-  return <img src="/logo.svg" alt="Flow" className={logo} />;
 };
