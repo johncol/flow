@@ -1,6 +1,7 @@
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import type { ReactNode } from "react";
-import { container, formCard } from "./modal-page.css";
+import { Logo } from "../logo/logo";
+import { container, formCard, logo } from "./modal-page.css";
 
 type ModalPageProps = {
   heading: string;
@@ -19,6 +20,7 @@ export const ModalPage = ({
 
   return (
     <div className={container}>
+      <Logo className={logo} />
       <Card size="4" className={cardClassName}>
         <Flex direction="column" align="center" mb="5">
           <Heading size="6" mb="1">

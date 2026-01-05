@@ -1,5 +1,9 @@
 import { logo } from "./logo.css";
 
-export const Logo = () => {
-  return <img src="/logo.svg" alt="Flow" className={logo} />;
+type LogoProps = {
+  className?: string;
+};
+
+export const Logo = ({ className }: LogoProps) => {
+  return <img src="/logo.svg" alt="Flow" className={`${logo} ${className}`} />;
 };
