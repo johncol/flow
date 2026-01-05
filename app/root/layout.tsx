@@ -4,8 +4,8 @@ import { RadixUIProvider } from "./radix-ui-provider";
 
 import { AuthProvider } from "~/components/product/session/auth-context";
 
-import { theme } from "~/theme.css";
-import "./root.css";
+import { theme } from "~/global-styles/theme.css";
+import "~/global-styles/root.css";
 
 export const Layout = ({ children }: React.PropsWithChildren) => {
   return (

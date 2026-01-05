@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { theme } from "~/theme.css";
+import { theme } from "~/global-styles/theme.css";
 
 export const header = style({
   display: "flex",
