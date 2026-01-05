@@ -6,24 +6,34 @@ import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { Input } from "~/components/ui/input/input";
 import { ModalPage } from "~/components/ui/modal-page/modal-page";
 import { showSuccessToast } from "~/components/ui/toast/toast";
-import { useLoginFormState } from "./use-login-form-state";
+import { useSignupFormState } from "./use-signup-form-state";
 
-export const LoginForm = () => {
-  const { login } = useSession();
+export const SignupForm = () => {
+  const { signup } = useSession();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [loginFailed, setLoginFailed] = useState(false);
+  const [signupFailed, setSignupFailed] = useState(false);
+  const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const {
+    name,
     email,
     password,
+    updateName,
     updateEmail,
     updatePassword,
     errors,
     hasErrors,
     updateErrors,
-  } = useLoginFormState();
+  } = useSignupFormState();
+
+  const handleNameKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      emailRef.current?.focus();
+    }
+  };
 
   const handleEmailKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -39,7 +49,7 @@ export const LoginForm = () => {
       return;
     }
 
-    setLoginFailed(false);
+    setSignupFailed(false);
 
     const hasValidationErrors = updateErrors();
     if (hasValidationErrors) {
@@ -48,32 +58,53 @@ export const LoginForm = () => {
 
     try {
       setIsLoading(true);
-      const session = await login(email.trim(), password);
+      const session = await signup({
+        name: name.trim(),
+        email: email.trim(),
+        password,
+      });
 
       if (session === null) {
-        setLoginFailed(true);
+        setSignupFailed(true);
         return;
       }
 
-      showSuccessToast(`Welcome ${session.user.name}`);
+      showSuccessToast(`Welcome to Flow, ${session.user.name}!`);
       navigate("/");
     } catch (error) {
       console.error(error);
-      setLoginFailed(true);
+      setSignupFailed(true);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <ModalPage heading="Welcome back" subheading="Sign in to continue to Flow">
+    <ModalPage heading="Create account" subheading="Sign up to get started with Flow">
       <form onSubmit={handleSubmit}>
         <Flex direction="column" gap="4">
+          <label>
+            <Text as="div" size="2" mb="1" weight="bold">
+              Name
+            </Text>
+            <Input
+              type="text"
+              placeholder="Your name"
+              value={name}
+              onChange={(e) => updateName(e.target.value)}
+              onKeyDown={handleNameKeyDown}
+              color={errors.name ? "red" : undefined}
+              required
+              disabled={isLoading}
+            />
+          </label>
+
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Email
             </Text>
             <Input
+              ref={emailRef}
               type="email"
               placeholder="you@example.com"
               value={email}
@@ -92,7 +123,7 @@ export const LoginForm = () => {
             <Input
               ref={passwordRef}
               type="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               value={password}
               onChange={(e) => updatePassword(e.target.value)}
               color={errors.password ? "red" : undefined}
@@ -107,17 +138,17 @@ export const LoginForm = () => {
           />
 
           <ErrorCallout
-            content="Invalid email or password"
-            visibleIf={loginFailed}
+            content="Unable to create account. Please try again."
+            visibleIf={signupFailed}
           />
 
           <Button type="submit" size="3" mt="2" color="amber">
-            Sign In {isLoading ? <Spinner size="1" /> : null}
+            Create Account {isLoading ? <Spinner size="1" /> : null}
           </Button>
 
           <Text size="2" color="gray" align="center">
             <Link asChild>
-              <RouterLink to="/signup">Or create account</RouterLink>
+              <RouterLink to="/login">Or login</RouterLink>
             </Link>
           </Text>
         </Flex>
