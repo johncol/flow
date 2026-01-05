@@ -9,5 +9,4 @@ export const authCta = style({
   borderRadius: "2rem",
   fontWeight: "inherit",
   fontSize: "inherit",
-  maxWidth: "25ch",
 });

@@ -7,7 +7,7 @@ import {
   notifyTasksDeleted,
   notifyTasksDeletedFailed,
 } from "~/utils/toasts/tasks";
-import { largeContainer } from "./delete-tasks-action.css";
+import { queries } from "~/global-styles/queries.css";
 
 export const DeleteTasksAction = () => {
   const { selectedIds, clearSelection, setIsDisabledSelection } = useTaskSelection();
@@ -45,7 +45,7 @@ export const DeleteTasksAction = () => {
       onClick={handleDelete}
       aria-label={getAriaLabel(selectedIds.size)}
     >
-      <span className={largeContainer}>Delete</span>
+      <span className={queries.styles.minSmall}>Delete</span>
       {getMaybeTasksCount(selectedIds.size)}
       {isDeleting ? <Spinner size="1" /> : <TrashIcon />}
     </Button>
