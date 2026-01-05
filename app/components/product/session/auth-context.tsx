@@ -7,11 +7,11 @@ import {
 } from "react";
 import * as authApi from "~/auth/session";
 import type { Session } from "~/types/session";
-import type { NewUserInput } from "~/types/users";
+import { ANONYMOUS, type AnonymousUserId, type NewUserInput } from "~/types/users";
 
 type AuthContextType = {
   isLoggedIn: boolean;
-  userId: string | "anonymous";
+  userId: string | AnonymousUserId;
   session: Session | null;
   login: (email: string, password: string) => Promise<Session | null>;
   signup: (input: NewUserInput) => Promise<Session | null>;
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const context: AuthContextType = {
     isLoggedIn: !!session,
-    userId: session?.user.id ?? "anonymous",
+    userId: session?.user.id ?? ANONYMOUS,
     session,
     login,
     signup,

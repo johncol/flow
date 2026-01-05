@@ -13,3 +13,6 @@ export type NewUserInput = {
   email: string;
   password: EncryptedString;
 };
+
+export const ANONYMOUS = "anonymous" as const;
+export type AnonymousUserId = typeof ANONYMOUS;

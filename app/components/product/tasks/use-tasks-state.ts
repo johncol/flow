@@ -19,7 +19,7 @@ export const useTasksState = () => {
       }
     };
     loadTasks();
-  }, []);
+  }, [userId]);
 
   const deleteTasks = async (ids: Set<string>) => {
     await api.deleteTasks(userId, ids);

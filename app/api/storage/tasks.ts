@@ -1,6 +1,6 @@
 import type { Task } from "~/types/tasks";
 
-const STORAGE_KEY_PREFIX = "tasks-user-";
+const STORAGE_KEY_PREFIX = "tasks-";
 const getStorageKey = (userId: string) => `${STORAGE_KEY_PREFIX}${userId}`;
 
 type StoredTask = Omit<Task, "dueDate" | "createdAt"> & {

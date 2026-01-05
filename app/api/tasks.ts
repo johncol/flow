@@ -63,3 +63,20 @@ export const deleteTasks = async (
   const filteredTasks = tasks.filter((task) => !taskIds.has(task.id));
   tasksStorage.saveTasks(userId, filteredTasks);
 };
+
+export const importTasks = async (
+  userId: string,
+  importedTasks: Task[]
+): Promise<Task[]> => {
+  await delay();
+
+  if (!tasksStorage.hasTasks(userId)) {
+    tasksStorage.saveTasks(userId, []);
+  }
+
+  const existingTasks = tasksStorage.getTasks(userId);
+  const tasks = [...existingTasks, ...importedTasks];
+  tasksStorage.saveTasks(userId, tasks);
+
+  return tasks;
+};

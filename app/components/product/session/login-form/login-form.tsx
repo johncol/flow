@@ -4,11 +4,13 @@ import { Link as RouterLink, useNavigate } from "react-router";
 import { useSession } from "~/components/product/session/auth-context";
 import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { Input } from "~/components/ui/input/input";
-import { showSuccessToast } from "~/components/ui/toast/toast";
+import { notifyLoginWelcome } from "~/utils/toasts/session";
+import { useLoggedOutTasks } from "../use-logged-out-tasks";
 import { useLoginFormState } from "./use-login-form-state";
 
 export const LoginForm = () => {
   const { login } = useSession();
+  const { saveTasksCreatedWhileLoggedOut } = useLoggedOutTasks();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [loginFailed, setLoginFailed] = useState(false);
@@ -54,7 +56,8 @@ export const LoginForm = () => {
         return;
       }
 
-      showSuccessToast(`Welcome ${session.user.name}`);
+      await saveTasksCreatedWhileLoggedOut(session.user);
+      notifyLoginWelcome(session.user.name);
       navigate("/");
     } catch (error) {
       console.error(error);
