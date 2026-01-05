@@ -6,13 +6,14 @@ import { SelectionHeaderCell } from "./bulk-select/selection-header-cell";
 import { DueDateCell } from "./due-date-cell";
 import { HeaderCell } from "./header-cell";
 import { StatusCell } from "./status-cell";
-import { emptyTableCell, tableTitle } from "./tasks-table.css";
+import { tableRoot, emptyTableCell, tableTitle } from "./tasks-table.css";
+import { container } from "~/global-styles/responsive.css";
 
 export const TasksTable = () => {
   const { tasks, tasksLoading } = useTasks();
 
   return (
-    <Table.Root>
+    <Table.Root className={tableRoot}>
       <TableHeader />
       {tasksLoading ? <TasksTableBodySkeleton /> : null}
       {!tasksLoading && tasks.length === 0 ? <EmptyTableBody /> : null}
@@ -34,7 +35,7 @@ const TableHeader = () => {
             <Strong>Status</Strong>
           </Badge>
         </HeaderCell>
-        <HeaderCell>
+        <HeaderCell className={container.styles.visibleOnMinSmall}>
           <Text>Due Date</Text>
         </HeaderCell>
       </Table.Row>
@@ -52,7 +53,10 @@ const TasksTableBody = () => {
           <SelectionCell id={id} title={title} />
           <Table.Cell>{title}</Table.Cell>
           <StatusCell taskId={id} status={status} />
-          <DueDateCell dueDate={dueDate} />
+          <DueDateCell
+            dueDate={dueDate}
+            className={container.styles.visibleOnMinSmall}
+          />
         </Table.Row>
       ))}
     </Table.Body>
@@ -90,7 +94,7 @@ const TasksTableBodySkeleton = () => {
           <Table.Cell>
             <Skeleton width="80px" height="24px" />
           </Table.Cell>
-          <Table.Cell>
+          <Table.Cell className={container.styles.visibleOnMinSmall}>
             <Skeleton width="100px" height="20px" />
           </Table.Cell>
         </Table.Row>

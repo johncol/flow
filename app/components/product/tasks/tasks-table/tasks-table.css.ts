@@ -1,5 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
+export const tableRoot = style({
+  containerName: "tasksTable",
+  containerType: "inline-size",
+});
+
 export const tableTitle = style({
   fontSize: "3rem",
   fontWeight: "700",

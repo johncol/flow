@@ -4,11 +4,14 @@ import { dueDateText } from "./tasks-table.css";
 
 type DueDateCellProps = {
   dueDate: Date;
-};
+} & Table.CellProps;
 
-export const DueDateCell: React.FC<DueDateCellProps> = ({ dueDate }) => {
+export const DueDateCell: React.FC<DueDateCellProps> = ({
+  dueDate,
+  ...props
+}) => {
   return (
-    <Table.Cell>
+    <Table.Cell {...props}>
       <Text className={dueDateText}>{formatDate(dueDate)}</Text>
     </Table.Cell>
   );
