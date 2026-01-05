@@ -4,7 +4,6 @@ import { Link as RouterLink, useNavigate } from "react-router";
 import { useSession } from "~/components/product/session/auth-context";
 import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { Input } from "~/components/ui/input/input";
-import { ModalPage } from "~/components/ui/modal-page/modal-page";
 import { showSuccessToast } from "~/components/ui/toast/toast";
 import { useLoginFormState } from "./use-login-form-state";
 
@@ -66,62 +65,60 @@ export const LoginForm = () => {
   };
 
   return (
-    <ModalPage heading="Welcome back" subheading="Sign in to continue to Flow">
-      <form onSubmit={handleSubmit}>
-        <Flex direction="column" gap="4">
-          <label>
-            <Text as="div" size="2" mb="1" weight="bold">
-              Email
-            </Text>
-            <Input
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => updateEmail(e.target.value)}
-              onKeyDown={handleEmailKeyDown}
-              color={errors.email ? "red" : undefined}
-              required
-              disabled={isLoading}
-            />
-          </label>
-
-          <label>
-            <Text as="div" size="2" mb="1" weight="bold">
-              Password
-            </Text>
-            <Input
-              ref={passwordRef}
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => updatePassword(e.target.value)}
-              color={errors.password ? "red" : undefined}
-              required
-              disabled={isLoading}
-            />
-          </label>
-
-          <ErrorCallout
-            content="Please fill in all fields"
-            visibleIf={hasErrors}
-          />
-
-          <ErrorCallout
-            content="Invalid email or password"
-            visibleIf={loginFailed}
-          />
-
-          <Button type="submit" size="3" mt="2" color="amber">
-            Sign In {isLoading ? <Spinner size="1" /> : null}
-          </Button>
-
-          <Text size="2" color="gray" align="center">
-            <Link asChild>
-              <RouterLink to="/signup">Or create account</RouterLink>
-            </Link>
+    <form onSubmit={handleSubmit}>
+      <Flex direction="column" gap="4">
+        <label>
+          <Text as="div" size="2" mb="1" weight="bold">
+            Email
           </Text>
-        </Flex>
-      </form>
-    </ModalPage>
+          <Input
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => updateEmail(e.target.value)}
+            onKeyDown={handleEmailKeyDown}
+            color={errors.email ? "red" : undefined}
+            required
+            disabled={isLoading}
+          />
+        </label>
+
+        <label>
+          <Text as="div" size="2" mb="1" weight="bold">
+            Password
+          </Text>
+          <Input
+            ref={passwordRef}
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => updatePassword(e.target.value)}
+            color={errors.password ? "red" : undefined}
+            required
+            disabled={isLoading}
+          />
+        </label>
+
+        <ErrorCallout
+          content="Please fill in all fields"
+          visibleIf={hasErrors}
+        />
+
+        <ErrorCallout
+          content="Invalid email or password"
+          visibleIf={loginFailed}
+        />
+
+        <Button type="submit" size="3" mt="2" color="amber">
+          Sign In {isLoading ? <Spinner size="1" /> : null}
+        </Button>
+
+        <Text size="2" color="gray" align="center">
+          <Link asChild>
+            <RouterLink to="/signup">Or create account</RouterLink>
+          </Link>
+        </Text>
+      </Flex>
+    </form>
   );
 };
