@@ -15,11 +15,11 @@ export const fail = (message: string = SIMULATED_ERROR) => {
 };
 
 export const generateTaskId = () => {
-  return "task_" + crypto.randomUUID();
+  return "task-" + crypto.randomUUID();
 };
 
 export const generateUserId = () => {
-  return "user_" + crypto.randomUUID();
+  return "user-" + crypto.randomUUID();
 };
 
 export const encryptPassword = (password: string): Promise<EncryptedString> => {
