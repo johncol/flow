@@ -5,32 +5,32 @@ const breakpoints = {
   large: 1024,
 };
 
-const container = {
+const containerQueries = {
   minSmall: `(min-width: ${breakpoints.small}px)`,
   minLarge: `(min-width: ${breakpoints.large}px)`,
 };
 
-const styles = {
-  minSmall: style({
+const containerStyles = {
+  visibleOnMinSmall: style({
     display: "none",
     "@container": {
-      [container.minSmall]: {
+      [containerQueries.minSmall]: {
         display: "initial",
       },
     },
   }),
-  minLarge: style({
+  visibleOnMinLarge: style({
     display: "none",
     "@container": {
-      [container.minLarge]: {
+      [containerQueries.minLarge]: {
         display: "initial",
       },
     },
   }),
 };
 
-export const queries = {
+export const container = {
   breakpoints,
-  container,
-  styles,
+  queries: containerQueries,
+  styles: containerStyles,
 };

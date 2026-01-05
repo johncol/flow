@@ -3,14 +3,15 @@ import { Button, Spinner, Tooltip } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useTasks } from "~/components/product/tasks/tasks-context";
 import { useTaskSelection } from "~/components/product/tasks/tasks-table/bulk-select/task-selection-context";
+import { container } from "~/global-styles/responsive.css";
 import {
   notifyTasksDeleted,
   notifyTasksDeletedFailed,
 } from "~/utils/toasts/tasks";
-import { queries } from "~/global-styles/queries.css";
 
 export const DeleteTasksAction = () => {
-  const { selectedIds, clearSelection, setIsDisabledSelection } = useTaskSelection();
+  const { selectedIds, clearSelection, setIsDisabledSelection } =
+    useTaskSelection();
   const { deleteTasks } = useTasks();
   const [isDeleting, setIsDeleting] = useState(false);
   const hasSelection = selectedIds.size > 0;
@@ -45,7 +46,7 @@ export const DeleteTasksAction = () => {
       onClick={handleDelete}
       aria-label={getAriaLabel(selectedIds.size)}
     >
-      <span className={queries.styles.minSmall}>Delete</span>
+      <span className={container.styles.visibleOnMinSmall}>Delete</span>
       {getMaybeTasksCount(selectedIds.size)}
       {isDeleting ? <Spinner size="1" /> : <TrashIcon />}
     </Button>
