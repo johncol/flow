@@ -1,9 +1,9 @@
-import { Button, Flex, Spinner, Text, TextField } from "@radix-ui/themes";
+import { Button, Flex, Spinner, Text } from "@radix-ui/themes";
 import { useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { useNewTask } from "~/components/product/tasks/add-task-dialog/new-task-context";
 import { ErrorCallout } from "~/components/ui/callout/error-callout";
+import { Input } from "~/components/ui/input/input";
 import { notifyTaskAdded } from "~/utils/toasts/tasks";
-import { input } from "./add-task-form.css";
 import { useAddTaskFormState } from "./use-add-task-form-state";
 
 export const AddTaskForm = () => {
@@ -65,8 +65,7 @@ export const AddTaskForm = () => {
           <Text as="div" size="2" mb="1" weight="bold">
             Task Title
           </Text>
-          <TextField.Root
-            className={input}
+          <Input
             placeholder="e.g. Write blog post"
             value={title}
             onChange={(e) => updateTitle(e.target.value)}
@@ -81,8 +80,7 @@ export const AddTaskForm = () => {
           <Text as="div" size="2" mb="1" weight="bold">
             Due Date
           </Text>
-          <TextField.Root
-            className={input}
+          <Input
             ref={dueDateRef}
             type="date"
             value={dueDate}
