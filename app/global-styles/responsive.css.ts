@@ -15,7 +15,7 @@ const containerStyles = {
     display: "none",
     "@container": {
       [containerQueries.minSmall]: {
-        display: "initial",
+        display: "revert",
       },
     },
   }),
@@ -23,7 +23,7 @@ const containerStyles = {
     display: "none",
     "@container": {
       [containerQueries.minLarge]: {
-        display: "initial",
+        display: "revert",
       },
     },
   }),
