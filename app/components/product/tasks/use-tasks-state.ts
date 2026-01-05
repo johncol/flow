@@ -1,16 +1,17 @@
 import { useEffect, useReducer, useState } from "react";
 import * as api from "~/api/tasks";
 import type { NewTaskInput, Task, TaskUpdates } from "~/types/tasks";
-import { MOCK_USER_ID } from "../../../utils/mocks/mock-user";
+import { useSession } from "../session/auth-context";
 
 export const useTasksState = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, []);
   const [tasksLoading, setTasksLoading] = useState(true);
+  const { userId } = useSession();
 
   useEffect(() => {
     const loadTasks = async () => {
       try {
-        const fetchedTasks = await api.fetchTasks(MOCK_USER_ID);
+        const fetchedTasks = await api.fetchTasks(userId);
         const action: TasksAction = { type: "set", tasks: fetchedTasks };
         dispatch(action);
       } finally {
@@ -21,19 +22,19 @@ export const useTasksState = () => {
   }, []);
 
   const deleteTasks = async (ids: Set<string>) => {
-    await api.deleteTasks(MOCK_USER_ID, ids);
+    await api.deleteTasks(userId, ids);
     const action: TasksAction = { type: "delete", ids };
     dispatch(action);
   };
 
   const addTask = async (input: NewTaskInput) => {
-    const task = await api.createTask(input);
+    const task = await api.createTask(userId, input);
     const action: TasksAction = { type: "add", task };
     dispatch(action);
   };
 
   const updateTask = async (id: string, updates: TaskUpdates) => {
-    await api.updateTask(MOCK_USER_ID, id, updates);
+    await api.updateTask(userId, id, updates);
     const action: TasksAction = { type: "update", id, updates };
     dispatch(action);
   };

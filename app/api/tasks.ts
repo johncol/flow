@@ -1,6 +1,5 @@
 import * as tasksStorage from "~/api/storage/tasks";
 import type { NewTaskInput, Task, TaskUpdates } from "~/types/tasks";
-import { MOCK_USER_ID } from "~/utils/mocks/mock-user";
 import { delay, generateTaskId } from "./utils";
 
 export const fetchTasks = async (userId: string): Promise<Task[]> => {
@@ -13,7 +12,10 @@ export const fetchTasks = async (userId: string): Promise<Task[]> => {
   return tasksStorage.getTasks(userId);
 };
 
-export const createTask = async (input: NewTaskInput): Promise<Task> => {
+export const createTask = async (
+  userId: string,
+  input: NewTaskInput
+): Promise<Task> => {
   await delay();
 
   const task: Task = {
@@ -22,7 +24,7 @@ export const createTask = async (input: NewTaskInput): Promise<Task> => {
     dueDate: input.dueDate,
     status: "pending",
     createdAt: new Date(),
-    userId: MOCK_USER_ID,
+    userId,
   };
 
   const tasks = tasksStorage.getTasks(task.userId);

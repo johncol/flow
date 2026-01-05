@@ -10,6 +10,7 @@ import type { Session } from "~/types/session";
 
 type AuthContextType = {
   isLoggedIn: boolean;
+  userId: string | "anonymous";
   session: Session | null;
   login: (email: string, password: string) => Promise<Session | null>;
   logout: () => void;
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const context: AuthContextType = {
     isLoggedIn: !!session,
+    userId: session?.user.id ?? "anonymous",
     session,
     login,
     logout,
