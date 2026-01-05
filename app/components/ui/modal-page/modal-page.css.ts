@@ -13,7 +13,7 @@ export const container = style({
 
 export const logo = style({
   position: "absolute",
-  top: "2.2rem",
+  top: "2.0rem",
   left: "1.5rem",
 });
 
