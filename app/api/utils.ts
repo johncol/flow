@@ -1,6 +1,6 @@
 import type { EncryptedString } from "~/types/users";
 
-const SIMULATED_DELAY_MS = 100;
+const SIMULATED_DELAY_MS = 1000;
 
 export const delay = (millis: number = SIMULATED_DELAY_MS) => {
   return new Promise((resolve) => setTimeout(resolve, millis));
