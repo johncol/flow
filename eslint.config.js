@@ -44,6 +44,7 @@ export default [
         Response: "readonly",
         Request: "readonly",
         Headers: "readonly",
+        Storage: "readonly",
       },
     },
     plugins: {
