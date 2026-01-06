@@ -13,7 +13,7 @@ import {
   type NewUserInput,
 } from "~/types/users";
 
-type AuthContextType = {
+export type AuthContextType = {
   isLoggedIn: boolean;
   userId: string | AnonymousUserId;
   session: Session | null;
