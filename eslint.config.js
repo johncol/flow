@@ -72,6 +72,22 @@ export default [
     },
   },
   {
+    files: ["**/*.test.{ts,tsx}", "vitest.setup.ts"],
+    languageOptions: {
+      globals: {
+        describe: "readonly",
+        it: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
+        vi: "readonly",
+        global: "writable",
+      },
+    },
+  },
+  {
     ignores: ["node_modules/", "build/", "dist/", ".react-router/"],
   },
 ];
