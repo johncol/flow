@@ -16,15 +16,8 @@ export const LoginForm = () => {
   const [loginFailed, setLoginFailed] = useState(false);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const {
-    email,
-    password,
-    updateEmail,
-    updatePassword,
-    errors,
-    hasErrors,
-    updateErrors,
-  } = useLoginFormState();
+  const { email, password, updateField, errors, hasErrors, updateErrors } =
+    useLoginFormState();
 
   const handleEmailKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -78,7 +71,7 @@ export const LoginForm = () => {
             type="email"
             placeholder="you@example.com"
             value={email}
-            onChange={(e) => updateEmail(e.target.value)}
+            onChange={(e) => updateField("email", e.target.value)}
             onKeyDown={handleEmailKeyDown}
             color={errors.email ? "red" : undefined}
             required
@@ -95,7 +88,7 @@ export const LoginForm = () => {
             type="password"
             placeholder="Enter your password"
             value={password}
-            onChange={(e) => updatePassword(e.target.value)}
+            onChange={(e) => updateField("password", e.target.value)}
             color={errors.password ? "red" : undefined}
             required
             disabled={isLoading}

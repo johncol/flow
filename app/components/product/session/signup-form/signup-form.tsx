@@ -23,9 +23,7 @@ export const SignupForm = () => {
     name,
     email,
     password,
-    updateName,
-    updateEmail,
-    updatePassword,
+    updateField,
     errors,
     hasErrors,
     updateErrors,
@@ -99,7 +97,7 @@ export const SignupForm = () => {
             type="text"
             placeholder="Your name"
             value={name}
-            onChange={(e) => updateName(e.target.value)}
+            onChange={(e) => updateField("name", e.target.value)}
             onKeyDown={handleNameKeyDown}
             color={errors.name ? "red" : undefined}
             required
@@ -116,7 +114,7 @@ export const SignupForm = () => {
             type="email"
             placeholder="you@example.com"
             value={email}
-            onChange={(e) => updateEmail(e.target.value)}
+            onChange={(e) => updateField("email", e.target.value)}
             onKeyDown={handleEmailKeyDown}
             color={errors.email ? "red" : undefined}
             required
@@ -133,7 +131,7 @@ export const SignupForm = () => {
             type="password"
             placeholder="Create a password"
             value={password}
-            onChange={(e) => updatePassword(e.target.value)}
+            onChange={(e) => updateField("password", e.target.value)}
             color={errors.password ? "red" : undefined}
             required
             disabled={isLoading}

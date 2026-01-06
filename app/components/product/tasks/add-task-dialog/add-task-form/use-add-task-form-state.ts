@@ -1,55 +1,19 @@
-import { useState } from "react";
+import { notEmpty } from "~/utils/forms/validators/not-empty";
+import { useFormState } from "~/utils/forms/use-form-state";
 
-type FormErrors = {
-  title?: boolean;
-  dueDate?: boolean;
+type AddTaskFormFields = {
+  title: string;
+  dueDate: string;
 };
 
 export const useAddTaskFormState = () => {
-  const [title, setTitle] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const resetState = () => {
-    setTitle("");
-    setDueDate("");
-    setErrors({});
-  };
-
-  const updateTitle = (value: string) => {
-    setTitle(value);
-    if (errors.title) {
-      setErrors((prev) => ({ ...prev, title: false }));
-    }
-  };
-
-  const updateDueDate = (value: string) => {
-    setDueDate(value);
-    if (errors.dueDate) {
-      setErrors((prev) => ({ ...prev, dueDate: false }));
-    }
-  };
-
-  const updateErrors = (): boolean => {
-    const newErrors: FormErrors = {
-      title: !title.trim(),
-      dueDate: !dueDate,
-    };
-    const hasErrors = Object.values(newErrors).some(Boolean);
-    setErrors(newErrors);
-    return hasErrors;
-  };
-
-  const hasErrors = Object.values(errors).some(Boolean);
+  const { values, ...controller } = useFormState<AddTaskFormFields>({
+    title: { initialValue: "", validate: notEmpty },
+    dueDate: { initialValue: "", validate: notEmpty },
+  });
 
   return {
-    title,
-    dueDate,
-    updateTitle,
-    updateDueDate,
-    errors,
-    hasErrors,
-    updateErrors,
-    resetState,
+    ...values,
+    ...controller,
   };
 };

@@ -16,8 +16,7 @@ export const AddTaskForm = () => {
     title,
     dueDate,
     resetState,
-    updateTitle,
-    updateDueDate,
+    updateField,
     errors,
     updateErrors,
     hasErrors,
@@ -74,7 +73,7 @@ export const AddTaskForm = () => {
           <Input
             placeholder="e.g. Write blog post"
             value={title}
-            onChange={(e) => updateTitle(e.target.value)}
+            onChange={(e) => updateField("title", e.target.value)}
             onKeyDown={handleTitleKeyEnterDown}
             color={errors.title ? "red" : undefined}
             required
@@ -90,7 +89,7 @@ export const AddTaskForm = () => {
             ref={dueDateRef}
             type="date"
             value={dueDate}
-            onChange={(e) => updateDueDate(e.target.value)}
+            onChange={(e) => updateField("dueDate", e.target.value)}
             color={errors.dueDate ? "red" : undefined}
             required
             disabled={isSaving}
