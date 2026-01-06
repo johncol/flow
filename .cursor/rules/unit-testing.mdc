@@ -134,23 +134,27 @@ it("handles click", async () => {
 
 ## Mocking
 
+### Mock naming
+
+Mock functions and variables should not include the word "mock" in the name. For example, use `navigate` instead of `mockNavigate`, and `user` instead of `mockUser`.
+
 ### Mock navigation
 ```typescript
 import { vi } from "vitest";
 
-const mockNavigate = vi.fn();
+const navigate = vi.fn();
 
 vi.mock("react-router", async () => {
   const actual = await vi.importActual("react-router");
   return {
     ...actual,
-    useNavigate: () => mockNavigate,
+    useNavigate: () => navigate,
   };
 });
 
 // Clear between tests
 beforeEach(() => {
-  mockNavigate.mockClear();
+  navigate.mockClear();
 });
 ```
 
