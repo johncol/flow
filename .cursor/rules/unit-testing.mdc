@@ -1,0 +1,194 @@
+---
+description: Guidelines for writing unit tests in this project
+globs: **/*.test.ts, **/*.test.tsx
+---
+
+# Unit Testing Guidelines
+
+This project uses **Vitest** with **React Testing Library** for unit testing.
+
+## File Location & Naming
+
+- Colocate test files next to the component or file being tested: `component.test.tsx` or `file.test.ts`
+- Test files must use `.test.ts` or `.test.tsx` suffix
+
+## Test Structure
+
+```typescript
+import { screen } from "@testing-library/react";
+import { ComponentUnderTest } from "./component-under-test";
+
+describe("ComponentUnderTest", () => {
+  // Group related tests with nested describe blocks
+  describe("feature or behavior", () => {
+    it("describes expected behavior", () => {
+      // Arrange, Act, Assert
+    });
+  });
+});
+```
+
+## Testing Utilities
+
+Reusable test utilities are in `~/utils/testing/`:
+
+### `renderWithProviders`
+Use for components that need app context (Theme, Router, Auth):
+
+```typescript
+import { screen } from "@testing-library/react";
+import {
+  createMockAuthContext,
+  renderWithProviders,
+} from "~/utils/testing/render-with-providers";
+
+// With default auth context (logged out)
+renderWithProviders(<MyComponent />);
+
+// With custom auth context
+const authContext = createMockAuthContext({ isLoggedIn: true, session });
+renderWithProviders(<MyComponent />, { authContext });
+```
+
+### `createLoggedInSession`
+Use when testing authenticated state:
+
+```typescript
+import { createLoggedInSession } from "~/utils/testing/session";
+
+const session = createLoggedInSession();
+const authContext = createMockAuthContext({ isLoggedIn: true, session });
+```
+
+### Simple components without context
+Use `render` directly for components that don't need providers:
+
+```typescript
+import { render, screen } from "@testing-library/react";
+
+render(<SimpleComponent prop="value" />);
+```
+
+### Components needing only Router
+Wrap with `MemoryRouter`:
+
+```typescript
+import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
+
+render(<MemoryRouter><ComponentWithLinks /></MemoryRouter>);
+```
+
+### Add more utilities as needed
+
+If you need to build a custom utility, add it to `~/utils/testing/` and import it into your test file.
+
+## What to Test
+
+### DO test:
+- **Key functionality** - Does it do what it's supposed to do?
+- **Conditional rendering** - Elements appear/disappear based on props/state
+- **User interactions** - Click handlers, form submissions
+- **Text content** - Important labels, messages, headings
+
+### DON'T test:
+- Specific CSS classes or styling (implementation detail)
+- Internal component structure
+- Third-party library internals (e.g., Radix UI Avatar fallback rendering)
+
+## Querying Elements
+
+Prefer queries in this order (accessibility-first):
+
+1. `getByText` - visible text content
+2. `getByRole` - buttons, headings, links, etc.
+3. `getByAltText` - images
+4. `getByTestId` - last resort
+
+Use `queryBy*` when asserting element does NOT exist:
+
+```typescript
+// Element should exist
+expect(screen.getByText("Hello")).toBeInTheDocument();
+
+// Element should NOT exist
+expect(screen.queryByText("Hello")).not.toBeInTheDocument();
+```
+
+## User Interactions
+
+Use `@testing-library/user-event` for realistic user interactions:
+
+```typescript
+import userEvent from "@testing-library/user-event";
+
+it("handles click", async () => {
+  const user = userEvent.setup();
+  
+  renderWithProviders(<MyComponent />);
+  
+  await user.click(screen.getByRole("button"));
+  await user.type(screen.getByRole("textbox"), "hello");
+});
+```
+
+## Mocking
+
+### Mock navigation
+```typescript
+import { vi } from "vitest";
+
+const mockNavigate = vi.fn();
+
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
+// Clear between tests
+beforeEach(() => {
+  mockNavigate.mockClear();
+});
+```
+
+### Mock functions in context
+Pass mock functions via `createMockAuthContext`:
+
+```typescript
+const logout = vi.fn();
+const authContext = createMockAuthContext({ logout });
+
+// Assert
+expect(logout).toHaveBeenCalled();
+```
+
+## DON'T Mock
+
+- **Dependencies key to the component's purpose** - Use real implementations
+  - Example: `getStatusLabel` for `StatusBadge` - use the real function
+- **Simple utility functions** - Let them run as-is
+
+## Radix UI Components
+
+The Radix UI dropdown and other components require `ResizeObserver`. This is globally mocked in `vitest.setup.ts`.
+
+For components using Radix UI Spinner, query by class since it lacks accessible roles:
+
+```typescript
+const { container } = render(<ComponentWithSpinner />);
+const spinner = container.querySelector(".rt-Spinner");
+expect(spinner).toBeInTheDocument();
+```
+
+## Running Tests
+
+```bash
+npm test              # Run all tests once
+npm run test:watch    # Watch mode for development
+npm test -- path/to/file.test.tsx  # Run specific test file
+```
+
+Once tests are working, run the linter to check for any linting errors in modified files
