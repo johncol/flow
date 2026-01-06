@@ -9,14 +9,14 @@ const DEFAULT_USER: User = {
   createdAt: new Date(),
 };
 
-export const createUser = (overrides: Partial<User> = {}): User => {
+export const createMockUser = (overrides: Partial<User> = {}): User => {
   return {
     ...DEFAULT_USER,
     ...overrides,
   };
 };
 
-export const createLoggedInSession = (user: User = DEFAULT_USER): Session => {
+export const createMockSession = (user: User = DEFAULT_USER): Session => {
   return {
     user: {
       id: user.id,

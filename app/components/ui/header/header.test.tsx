@@ -3,7 +3,7 @@ import {
   createMockAuthContext,
   renderWithProviders,
 } from "~/utils/testing/render-with-providers";
-import { createLoggedInSession } from "~/utils/testing/session";
+import { createMockSession } from "~/utils/testing/session";
 import { Header } from "./header";
 
 describe("Header", () => {
@@ -21,7 +21,7 @@ describe("Header", () => {
   });
 
   it("shows user menu when user is logged in", () => {
-    const session = createLoggedInSession();
+    const session = createMockSession();
     const authContext = createMockAuthContext({
       isLoggedIn: true,
       session,

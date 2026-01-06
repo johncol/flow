@@ -2,7 +2,7 @@
  * Mock Storage object that implements the Web Storage API.
  * Use this to mock localStorage or sessionStorage in tests.
  */
-const createStorageMock = (): Storage => {
+const createMockStorage = (): Storage => {
   let store: Record<string, string> = {};
 
   return {
@@ -35,13 +35,13 @@ export const setupStorageMocks = (): void => {
   originalSessionStorage = window.sessionStorage;
 
   Object.defineProperty(window, "localStorage", {
-    value: createStorageMock(),
+    value: createMockStorage(),
     writable: true,
     configurable: true,
   });
 
   Object.defineProperty(window, "sessionStorage", {
-    value: createStorageMock(),
+    value: createMockStorage(),
     writable: true,
     configurable: true,
   });

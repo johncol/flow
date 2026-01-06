@@ -5,7 +5,7 @@ import {
   restoreStorageMocks,
   setupStorageMocks,
 } from "~/utils/testing/storage";
-import { createUser } from "~/utils/testing/session";
+import { createMockUser } from "~/utils/testing/session";
 import { createAndLogin, getSession, login, logout } from "./session";
 
 vi.mock("~/api/users");
@@ -34,7 +34,7 @@ describe("auth/session", () => {
     });
 
     it("creates and returns session when user is found", async () => {
-      const user = createUser();
+      const user = createMockUser();
       vi.mocked(usersApi.fetchUser).mockResolvedValue(user);
 
       const result = await login("john@example.com", "password123");
@@ -69,7 +69,7 @@ describe("auth/session", () => {
         email: "jane@example.com",
         password: "securepassword",
       };
-      const user = createUser(input);
+      const user = createMockUser(input);
       vi.mocked(usersApi.createUser).mockResolvedValue(user);
 
       const result = await createAndLogin(input);
@@ -88,7 +88,7 @@ describe("auth/session", () => {
 
   describe("logout", () => {
     it("calls deleteSession from storage", () => {
-      const user = createUser();
+      const user = createMockUser();
       sessionStorage.createSession(user);
       expect(sessionStorage.getSession()).toBeDefined();
 
@@ -100,7 +100,7 @@ describe("auth/session", () => {
 
   describe("getSession", () => {
     it("returns session from storage when it exists", () => {
-      const user = createUser();
+      const user = createMockUser();
       const createdSession = sessionStorage.createSession(user);
 
       const result = getSession();

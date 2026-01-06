@@ -5,7 +5,7 @@ import {
   createMockAuthContext,
   renderWithProviders,
 } from "~/utils/testing/render-with-providers";
-import { createLoggedInSession } from "~/utils/testing/session";
+import { createMockSession } from "~/utils/testing/session";
 import { UserMenu } from "./user-menu";
 
 const mockNavigate = vi.fn();
@@ -32,7 +32,7 @@ describe("UserMenu", () => {
   });
 
   it("displays user name when logged in", () => {
-    const session = createLoggedInSession();
+    const session = createMockSession();
     const authContext = createMockAuthContext({
       isLoggedIn: true,
       session,
@@ -48,7 +48,7 @@ describe("UserMenu", () => {
     const logout = vi.fn();
     const authContext = createMockAuthContext({
       isLoggedIn: true,
-      session: createLoggedInSession(),
+      session: createMockSession(),
       logout,
     });
     renderWithProviders(<UserMenu />, { authContext });
