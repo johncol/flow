@@ -1,5 +1,5 @@
 import * as usersStorage from "~/api/storage/users";
-import { DomainError } from "~/errors/domain-error";
+import { DomainError } from "~/types/errors";
 import type { NewUserInput, User } from "~/types/users";
 import { delay, encryptPassword, generateUserId } from "./utils";
 

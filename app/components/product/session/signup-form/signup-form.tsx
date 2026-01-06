@@ -4,7 +4,7 @@ import { Link as RouterLink, useNavigate } from "react-router";
 import { useSession } from "~/components/product/session/auth-context";
 import { ErrorCallout } from "~/components/ui/callout/error-callout";
 import { Input } from "~/components/ui/input/input";
-import { DomainError } from "~/errors/domain-error";
+import { DomainError } from "~/types/errors";
 import { notifySignupWelcome } from "~/utils/toasts/session";
 import { DEFAULT_ERROR_MESSAGE } from "~/utils/toasts/utils";
 import { useLoggedOutTasks } from "../use-logged-out-tasks";
