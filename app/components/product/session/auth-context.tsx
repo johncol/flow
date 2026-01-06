@@ -1,6 +1,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
   type PropsWithChildren,
 } from "react";
@@ -34,9 +35,14 @@ export const useSession = () => {
 };
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [session, setSession] = useState<Session | null>(() =>
-    authApi.getSession()
-  );
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    const session = authApi.getSession();
+    if (session) {
+      setSession(session);
+    }
+  }, []);
 
   const login = async (email: string, password: string) => {
     const session = await authApi.login(email, password);

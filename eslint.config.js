@@ -59,6 +59,7 @@ export default [
       "react/prop-types": "off",
       "react/no-unescaped-entities": "off",
       "no-empty-pattern": "off",
+      "react-hooks/set-state-in-effect": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
