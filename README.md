@@ -1,73 +1,126 @@
-## flow
+## Flow
 
-Simple task management app focused on simplicity, great UX, and a11y. Built using React Router V7.
+A minimalist task management app focused on simplicity, great UX, and accessibility.
 
-### Stack
+🌐 **Live Demo:** [flow-production-2534.up.railway.app](https://flow-production-2534.up.railway.app)
 
-Full-stack React application using React Router, TypeScript, RadixUI, TODO add other relevant technologies
+---
 
-### Installation
+### Features
 
-Install the dependencies:
+- *Task Management* — Create, update, and delete tasks
+- *Status Tracking* — Filter tasks by status
+- *Bulk Actions* — Select and manage multiple tasks at once
+- *User Authentication* — Fake signup and login flow
+- *Accessible by Design* — Built with a11y best practices throughout
+- *Responsive UI* — Built mobile first
+
+---
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | [React Router v7](https://reactrouter.com/) (framework mode) |
+| Language | TypeScript |
+| UI Components | [Radix UI](https://www.radix-ui.com/) |
+| Styling | [Vanilla Extract](https://vanilla-extract.style/) |
+| Bundler | [Vite](https://vitejs.dev/) |
+| Testing | [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) |
+
+---
+
+### Getting Started
+
+#### Prerequisites
+
+- Node.js 18+
+- npm
+
+#### Installation
 
 ```bash
 npm install
 ```
 
-### Development
+#### Development
 
-Start the development server with HMR:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## Building for Production
+#### Testing
 
-Create a production build:
+```bash
+## Run tests once
+npm run test
+
+## Run tests in watch mode
+npm run test:watch
+```
+
+#### Linting
+
+```bash
+npm run lint
+```
+
+---
+
+### Project Structure
+
+```
+app/
+├── api/            # API layer and storage
+├── auth/           # Authentication logic
+├── components/
+│   ├── product/    # Feature components (tasks, session)
+│   └── ui/         # Reusable UI components
+├── pages/          # Page components
+├── routes/         # Route definitions
+├── types/          # TypeScript types
+└── utils/          # Shared utilities
+```
+
+---
+
+### Production
+
+#### Build
 
 ```bash
 npm run build
 ```
 
-## Deployment
+#### Docker
 
-### Docker Deployment
-
-To build and run using Docker:
+Build and run the containerized app:
 
 ```bash
-docker build -t my-app .
+## Build the image
+docker build -t flow .
 
-# Run the container
-docker run -p 3000:3000 my-app
+## Run the container
+docker run -p 3000:3000 flow
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+#### Deployment Platforms
 
-- AWS ECS
+The Docker image can be deployed to any container platform:
+
+- Railway
+- Fly.io
 - Google Cloud Run
+- AWS ECS
 - Azure Container Apps
 - Digital Ocean App Platform
-- Fly.io
-- Railway
 
-### DIY Deployment
+---
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+### Credits
 
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Open Source Resources
-
-- <a target="_blank" href="https://icons8.com/icon/aNdZ8pAqBvn5/double-check">Double check</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+- [Double check icon](https://icons8.com/icon/aNdZ8pAqBvn5/double-check) by [Icons8](https://icons8.com)
