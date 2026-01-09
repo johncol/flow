@@ -32,7 +32,7 @@ A minimalist task management app focused on simplicity, great UX, and accessibil
 
 ### Architecture
 
-See [architecture.md](architecture.md) for details.
+See [architecture.md](task/ARCHITECTURE.md) for details.
 
 ### Getting Started
 
