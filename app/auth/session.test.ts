@@ -24,20 +24,26 @@ describe("auth/session", () => {
     it("returns null when user is not found", async () => {
       vi.mocked(usersApi.fetchUser).mockResolvedValue(undefined);
 
-      const result = await login("unknown@example.com", "password");
+      const result = await login({
+        email: "unknown@example.com",
+        password: "password",
+      });
 
       expect(result).toBeNull();
-      expect(usersApi.fetchUser).toHaveBeenCalledWith(
-        "unknown@example.com",
-        "password"
-      );
+      expect(usersApi.fetchUser).toHaveBeenCalledWith({
+        email: "unknown@example.com",
+        password: "password",
+      });
     });
 
     it("creates and returns session when user is found", async () => {
       const user = createMockUser();
       vi.mocked(usersApi.fetchUser).mockResolvedValue(user);
 
-      const result = await login("john@example.com", "password123");
+      const result = await login({
+        email: "john@example.com",
+        password: "password123",
+      });
 
       expect(result).toMatchObject({
         user: {
@@ -47,16 +53,16 @@ describe("auth/session", () => {
         },
         loginTime: expect.any(Date),
       });
-      expect(usersApi.fetchUser).toHaveBeenCalledWith(
-        "john@example.com",
-        "password123"
-      );
+      expect(usersApi.fetchUser).toHaveBeenCalledWith({
+        email: "john@example.com",
+        password: "password123",
+      });
     });
 
     it("does not create session when user is not found", async () => {
       vi.mocked(usersApi.fetchUser).mockResolvedValue(undefined);
 
-      await login("unknown@example.com", "password");
+      await login({ email: "unknown@example.com", password: "password" });
 
       expect(sessionStorage.getSession()).toBeNull();
     });

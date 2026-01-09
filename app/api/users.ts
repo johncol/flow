@@ -1,18 +1,17 @@
 import * as usersStorage from "~/api/storage/users";
 import { DomainError } from "~/types/errors";
-import type { NewUserInput, User } from "~/types/users";
+import type { LoginInput, NewUserInput, User } from "~/types/users";
 import { delay, encryptPassword, generateUserId } from "./utils";
 
 export const fetchUser = async (
-  email: string,
-  password: string
+  input: LoginInput
 ): Promise<User | undefined> => {
   await delay();
 
-  const encryptedPassword = await encryptPassword(password);
+  const encryptedPassword = await encryptPassword(input.password);
   const users = usersStorage.getUsers();
   return users.find((user) => {
-    return user.email === email && user.password === encryptedPassword;
+    return user.email === input.email && user.password === encryptedPassword;
   });
 };
 

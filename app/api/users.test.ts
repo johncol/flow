@@ -43,14 +43,20 @@ describe("users API", () => {
 
   describe("fetchUser", () => {
     it("returns the user when email and password match", async () => {
-      const user = await fetchUser("existing@example.com", "password123");
+      const user = await fetchUser({
+        email: "existing@example.com",
+        password: "password123",
+      });
 
       expect(user).toEqual(existingUser);
       expect(utils.encryptPassword).toHaveBeenCalledWith("password123");
     });
 
     it("returns undefined when email does not match", async () => {
-      const user = await fetchUser("nonexistent@example.com", "password123");
+      const user = await fetchUser({
+        email: "nonexistent@example.com",
+        password: "password123",
+      });
 
       expect(user).toBeUndefined();
     });
@@ -58,7 +64,10 @@ describe("users API", () => {
     it("returns undefined when password does not match", async () => {
       vi.mocked(utils.encryptPassword).mockResolvedValue("different-hash");
 
-      const user = await fetchUser("existing@example.com", "wrongpassword");
+      const user = await fetchUser({
+        email: "existing@example.com",
+        password: "wrongpassword",
+      });
 
       expect(user).toBeUndefined();
     });

@@ -42,7 +42,7 @@ export const LoginForm = () => {
 
     try {
       setIsLoading(true);
-      const session = await login(email.trim(), password);
+      const session = await login({ email: email.trim(), password });
 
       if (session === null) {
         setLoginFailed(true);

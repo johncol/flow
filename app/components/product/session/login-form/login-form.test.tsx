@@ -133,7 +133,10 @@ describe("LoginForm", () => {
       await user.type(screen.getByLabelText("Password"), "secret123");
       await user.click(screen.getByRole("button", { name: /sign in/i }));
 
-      expect(login).toHaveBeenCalledWith("test@example.com", "secret123");
+      expect(login).toHaveBeenCalledWith({
+        email: "test@example.com",
+        password: "secret123",
+      });
     });
 
     it("trims email before calling login", async () => {
@@ -147,7 +150,10 @@ describe("LoginForm", () => {
       await user.type(screen.getByLabelText("Password"), "secret123");
       await user.click(screen.getByRole("button", { name: /sign in/i }));
 
-      expect(login).toHaveBeenCalledWith("test@example.com", "secret123");
+      expect(login).toHaveBeenCalledWith({
+        email: "test@example.com",
+        password: "secret123",
+      });
     });
 
     it("saves tasks created while logged out", async () => {

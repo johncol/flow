@@ -193,7 +193,9 @@ const TestConsumer = () => {
       <span data-testid="session-user-name">
         {session?.user.name ?? "none"}
       </span>
-      <button onClick={() => login("test@example.com", "password")}>
+      <button
+        onClick={() => login({ email: "test@example.com", password: "password" })}
+      >
         Login
       </button>
       <button onClick={() => signup(signupInput)}>Signup</button>

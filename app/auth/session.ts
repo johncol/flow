@@ -1,13 +1,10 @@
 import * as usersApi from "~/api/users";
 import type { Session } from "~/types/session";
-import type { NewUserInput } from "~/types/users";
+import type { LoginInput, NewUserInput } from "~/types/users";
 import * as storage from "./storage/session";
 
-export const login = async (
-  email: string,
-  password: string
-): Promise<Session | null> => {
-  const user = await usersApi.fetchUser(email, password);
+export const login = async (input: LoginInput): Promise<Session | null> => {
+  const user = await usersApi.fetchUser(input);
 
   if (!user) {
     return null;
