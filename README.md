@@ -2,8 +2,6 @@
 
 A minimalist task management app focused on simplicity, great UX, and accessibility.
 
-🌐 **Live Demo:** [flow-production-2534.up.railway.app](https://flow-production-2534.up.railway.app)
-
 ---
 
 ### Features
